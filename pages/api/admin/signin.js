@@ -8,6 +8,5 @@ export default async function handler(req, res) {
     if (error) throw error;
     console.log('The solution is: ', results);
   });
-
     res.json({status: "success", message: "Signin success"});
 }
