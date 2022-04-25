@@ -39,6 +39,17 @@ export default function AssignDoctor() {
             </Grid>
             <Grid item md={12} lg={12}>
               <TextField
+                id="doc-dept-code" // id is required
+                label="Department Code"
+                type="number"
+                autoComplete="Department Code"
+                variant="outlined"
+                margin="normal"
+                sx={{ width: "300px" }}
+              />
+            </Grid>
+            <Grid item md={12} lg={12}>
+              <TextField
                 id="email" // id is required
                 label="Email"
                 type="Email"
