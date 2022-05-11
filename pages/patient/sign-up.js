@@ -1,28 +1,24 @@
 import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import axios from "axios";
+import bcrypt from "bcryptjs";
+import router from "next/router";
 import { useState } from "react";
-import Appbar from "../../components/NavBar";
+const SignUp = () => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
+    const submitHandler = async() => {
+        console.log({ email, password, name });
 
-export default function AssignDoctor() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [deptCode, setDeptCode] = useState("");
-  console.log("here");
-  const submitHandler = async () => {
-    console.log({ email, password, deptCode });
+        const response = await axios.post("/api/patient/sign-up", {
+            email,
+            password: bcrypt.hashSync(password),
+        })
 
-    const response = await axios.post("/api/admin/assign-doctor", {
-      email,
-      password,
-      deptCode,
-    })
-
-    console.log({ response });
-  };
-  return (
-    <div>
-      <Appbar />
-      <Grid
+        if(response.data.status === "success") router.push("/patient/sign-in");
+    }
+    return (
+        <Grid
         container
         spacing={0}
         direction="column"
@@ -33,24 +29,24 @@ export default function AssignDoctor() {
         
         <Paper elevation={3} sx={{ margin: 2 }}>
         <Typography variant="h5" component="h1" sx={{ color: "Grey", fontWeight: 'bold' }} display="flex" justifyContent="center" marginTop="5vh">
-          Assign Doctor
+          Sign Up
         </Typography>
           <Box sx={{ padding: 1, margin: 3 }}>
             <Grid item md={12} lg={12}>
-              <TextField
-                id="doc-dept-code" // id is required
-                label="Department Code"
-                type="number"
-                autoComplete="Department Code"
+            <TextField
+                id="name" 
+                label="Name"
+                type="name"
+                autoComplete="name"
                 variant="outlined"
                 margin="normal"
                 sx={{ width: "300px" }}
-                onChange={(e) => setDeptCode(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
               />
             </Grid>
             <Grid item md={12} lg={12}>
               <TextField
-                id="email" // id is required
+                id="email" 
                 label="Email"
                 type="Email"
                 autoComplete="Email"
@@ -78,6 +74,6 @@ export default function AssignDoctor() {
           Submit
         </Button>
       </Grid>
-    </div>
-  );
+    )
 }
+export default SignUp;

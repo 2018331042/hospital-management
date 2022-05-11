@@ -1,11 +1,26 @@
 import { Grid, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import axios from "axios";
+import { useState } from "react";
 import Appbar from "../../components/NavBar";
 
 export default function CreateDepartment() {
+  const [deptName, setDeptName] = useState("");
+  const [deptCode, setDeptCode] = useState("");
+  const submitHandler = async() => {
+    console.log({ deptName, deptCode });
+
+    const response = await axios.post("/api/admin/create-department", {
+      deptName,
+      deptCode,
+      
+    })
+
+    console.log({ response });
+  }
   return (
     <>
       <Appbar />
@@ -17,15 +32,18 @@ export default function CreateDepartment() {
         justifyContent="center"
         sx={{ marginTop: "10vh" }}
       >
+        <Paper elevation={3} sx={{ margin: 2 }}>
         <Typography
           variant="h5"
           component="h1"
           sx={{ color: "Grey", fontWeight: "bold" }}
+          display="flex"
+          justifyContent="center"
+          marginTop="5vh"
         >
           Create Department
         </Typography>
-        <Paper elevation={3} sx={{ margin: 2 }}>
-          <Box sx={{ margin: 10 }}>
+          <Box sx={{ margin: 5 }}>
             <Grid item md={12} lg={12}>
               <TextField
                 id="dept_id" // id is required
@@ -35,6 +53,7 @@ export default function CreateDepartment() {
                 variant="outlined"
                 margin="normal"
                 sx={{ width: "300px" }}
+                onChange={(e) => setDeptName(e.target.value)}
               />
             </Grid>
             <Grid item md={12} lg={12}>
@@ -46,11 +65,12 @@ export default function CreateDepartment() {
                 variant="outlined"
                 margin="normal"
                 sx={{ width: "300px" }}
+                onChange={(e) => setDeptCode(e.target.value)}
               />
             </Grid>
           </Box>
         </Paper>
-        <Button variant="contained" color="secondary">
+        <Button variant="contained" color="secondary" onClick={submitHandler}>
           Submit
         </Button>
       </Grid>

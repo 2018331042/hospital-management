@@ -17,6 +17,4 @@ connection.connect((err, client) => {
     }
 })
 
-
-
 export default connection;
