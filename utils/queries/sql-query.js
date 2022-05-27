@@ -7,7 +7,9 @@ export const INSERT_PATIENT_ONE = `INSERT INTO PATIENT (email, password) VALUES 
 
 export const FIND_PATIENT = `SELECT * FROM PATIENT WHERE email = ?`;
 
-export const FIND_ADMIN = `SELECT * FROM ADMIN WHERE email = ? AND password = ?`;
+export const FIND_DOCTOR = `SELECT * FROM DOCTOR WHERE email = ?`;
+
+export const FIND_ADMIN = `SELECT * FROM ADMIN WHERE email = ?`;
 
 export const CREATE_DOCTOR_TABLE = `CREATE TABLE DOCTOR(
    id INTEGER PRIMARY KEY,

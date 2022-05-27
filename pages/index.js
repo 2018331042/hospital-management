@@ -13,7 +13,7 @@ export default function Home() {
           alignItems: 'center',
         }}
       >
-        {isLoading ? <div>Loading...</div> : <div>{user.type}</div>}
+        {isLoading ? <div>Loading...</div> : <div>{user.email}</div>}
       </div>
     </Page>
   );

@@ -15,7 +15,7 @@ import { useAuth } from "../utils/contexts/auth";
 import { useSidebar } from "../utils/contexts/sidebarContext";
 
 export default function Page({ children, title }) {
-  const { open, setMode, setOpen, mode } = useSidebar();
+  const { setMode, setOpen } = useSidebar();
   const { isLoading, isLoggedIn, user } = useAuth();
 
   const makeSidebar = useCallback( () => {

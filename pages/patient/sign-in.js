@@ -11,7 +11,11 @@ const SignIn = () => {
   const submitHandler = async () => {
     console.log({ email, password });
 
+<<<<<<< HEAD
     const response = await signIn(email, password, "patitent");
+=======
+    const response = await signIn(email, password, "patient");
+>>>>>>> dc94151c72d8dd959c5fcfbdaad1a9df430b54b0
     console.log({ response });
     if (response.status === "SUCCESS") router.push("/");
   };

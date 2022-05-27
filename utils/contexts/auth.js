@@ -56,21 +56,21 @@ export const AuthProvider = ({ children }) => {
       });
   }, []);
 
-  const signIn = async (useremail, password) => {
+  const signIn = async (userEmail, password, userType) => {
     setIsLoading(true);
     const response = await axios.post('/api/auth/sign-in', {
-      email: useremail,
+      email: userEmail,
       password,
-      type,
+      type: userType,
     });
     const { status, message, data } = response.data;
     if (message === 'FAILED') {
       return { status, message };
     }
-    const { token, email, id } = data;
+    const { token, email, type } = data;
     localStorage.setItem('token', token);
     setToken(token);
-    setUser({ email, id, type });
+    setUser({ email, type });
     setIsLoggedIn(true);
     setIsLoading(false);
     return { status, message };
