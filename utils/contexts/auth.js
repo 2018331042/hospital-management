@@ -1,6 +1,6 @@
-import axios from "axios";
-import router from "next/router";
-import { createContext, useContext, useEffect, useState } from "react";
+import axios from 'axios';
+import router from 'next/router';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext();
 
@@ -9,32 +9,32 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [token, setToken] = useState(null);
   const [user, setUser] = useState({
-    email: "",
-    id: "",
-    type: "",
+    email: '',
+    id: '',
+    type: '',
   });
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token === null) {
       setIsLoading(false);
       const routerName = router.pathname;
       if (
-        router.pathname === "/patient/sign-in" ||
-        router.pathname === "/patient/sign-up" ||
-        router.pathname === "doctor/sign-in" ||
-        router.pathname === "admin/sign-in"
+        router.pathname === '/patient/sign-in' ||
+        router.pathname === '/patient/sign-up' ||
+        router.pathname === 'doctor/sign-in' ||
+        router.pathname === 'admin/sign-in'
       ) {
         router.push(routerName);
       } else {
-        router.push("/");
+        router.push('/');
       }
       return;
     }
     setToken(token);
     console.log({ token });
     axios
-      .post("/api/verify-token", {
+      .post('/api/verify-token', {
         token,
       })
       .then((response) => {
@@ -50,26 +50,27 @@ export const AuthProvider = ({ children }) => {
           setUser({ email, id, type });
         } else {
           setIsLoggedIn(false);
-          setUser({ email: "", id: "", type: "" });
-          router.push("/");
+          setUser({ email: '', id: '', type: '' });
+          router.push('/');
         }
       });
   }, []);
 
-  const signIn = async (email, password) => {
+  const signIn = async (useremail, password) => {
     setIsLoading(true);
-    const response = await axios.post("/api/patient/sign-in", {
-      email,
+    const response = await axios.post('/api/auth/sign-in', {
+      email: useremail,
       password,
+      type,
     });
     const { status, message, data } = response.data;
-    if (message === "FAILED") {
+    if (message === 'FAILED') {
       return { status, message };
     }
-    const { token, user } = data;
-    localStorage.setItem("token", token);
+    const { token, email, id } = data;
+    localStorage.setItem('token', token);
     setToken(token);
-    setUser(user);
+    setUser({ email, id, type });
     setIsLoggedIn(true);
     setIsLoading(false);
     return { status, message };

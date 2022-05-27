@@ -1,20 +1,30 @@
 import mysql from 'mysql';
 
 const connection = mysql.createConnection({
-    host: "localhost",
-    user: "db_user",
-    password: "db_user_pass",
-    port: 6033,
-    database: "HospitalDB"
+  host: 'localhost',
+  user: 'db_user',
+  password: 'password',
+  port: 6033,
+  database: 'HospitalDB',
 });
 
-connection.connect((err, client) => {
-    console.log({ client })
-    if (err) {
-        console.log({ err });
-    } else {
-        console.log("connected");
-    }
-})
+(async () => {
+  try {
+    await new Promise((resolve, reject) => {
+      connection.connect((err, client) => {
+        console.log({ client });
+        if (err) {
+          console.log({ err });
+          reject(err);
+        } else {
+          console.log('connected');
+          resolve();
+        }
+      });
+    });
+  } catch (err) {
+    console.log({ err });
+  }
+})();
 
 export default connection;

@@ -4,7 +4,7 @@ import { FIND_PATIENT } from "../../../utils/queries/sql-query";
 import { createToken } from "../../../utils/token";
 
 export default async function handler(req,res) {
-    const {email, password} = req.body;
+    const {email, password, type} = req.body;
     console.log({email, password});
 
      Connection.query(FIND_PATIENT, [email], function (error, results, fields) {
@@ -15,7 +15,7 @@ export default async function handler(req,res) {
         }
 
         if(bcrypt.compareSync(password, results[0].password)){
-            const token = createToken(results[0], "patient");
+            const token = createToken(results[0], type);
 
             return res.json({status: "SUCCESS", data:{email:results[0].email, id:results[0].id, token}, message: "SIGNIN_SUCCESS"});
         }
