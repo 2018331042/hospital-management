@@ -5,7 +5,7 @@ export default function Home() {
   const { isLoggedIn, isLoading, token, user } = useAuth();
   return (
     <Page>
-      <div style={{display: "flex", direction:"column", minHeight:"50vh", alignItems:"center"}}>{isLoading ? <div>Loading...</div> : <div>{user.type}</div>}</div>
+      <div style={{display: "flex", direction:"column", minHeight:"50vh", alignItems:"center"}}>{isLoading ? <div>Loading...</div> : <div>{user.email}</div>}</div>
     </Page>
   );
 }

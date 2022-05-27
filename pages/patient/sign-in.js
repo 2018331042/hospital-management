@@ -11,7 +11,7 @@ const SignIn = () => {
   const submitHandler = async () => {
     console.log({ email, password });
 
-    const response = await signIn(email, password);
+    const response = await signIn(email, password, "patient");
     console.log({ response });
     if (response.status === "SUCCESS") router.push("/");
   };

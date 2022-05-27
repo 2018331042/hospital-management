@@ -56,20 +56,21 @@ export const AuthProvider = ({ children }) => {
       });
   }, []);
 
-  const signIn = async (email, password) => {
+  const signIn = async (userEmail, password, userType) => {
     setIsLoading(true);
-    const response = await axios.post("/api/patient/sign-in", {
-      email,
+    const response = await axios.post("/api/auth/sign-in", {
+      email: userEmail,
       password,
-    });
+      type:userType,
+    })
     const { status, message, data } = response.data;
     if (message === "FAILED") {
       return { status, message };
     }
-    const { token, user } = data;
+    const { token, email, type } = data;
     localStorage.setItem("token", token);
     setToken(token);
-    setUser(user);
+    setUser({email, type});
     setIsLoggedIn(true);
     setIsLoading(false);
     return { status, message };
