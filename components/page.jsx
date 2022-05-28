@@ -6,9 +6,9 @@ import {
   Grid,
   Link,
   Toolbar,
-  Typography
+  Typography,
 } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, padding } from "@mui/system";
 import Head from "next/head";
 import React, { useCallback } from "react";
 import { useAuth } from "../utils/contexts/auth";
@@ -18,21 +18,21 @@ export default function Page({ children, title }) {
   const { setMode, setOpen } = useSidebar();
   const { isLoading, isLoggedIn, user } = useAuth();
 
-  const makeSidebar = useCallback( () => {
+  const makeSidebar = useCallback(() => {
     if (isLoading || !isLoggedIn) {
       setMode("unauthenticated");
       return;
     }
-    if(user.type === "patient") {
+    if (user.type === "patient") {
       setMode("patient");
     }
-    if(user.type === "doctor") {
+    if (user.type === "doctor") {
       setMode("doctor");
     }
-    if(user.type === "admin") {
+    if (user.type === "admin") {
       setMode("admin");
     }
-  },[isLoading, isLoggedIn, user, setMode]);
+  }, [isLoading, isLoggedIn, user, setMode]);
 
   if (isLoading && !isLoggedIn) {
     return (
@@ -83,8 +83,7 @@ export default function Page({ children, title }) {
           </Toolbar>
         </AppBar>
       </Box>
-      {children}
-      
+      <div style={{display: "flex", direction:"column", alignItems:"center", padding: "20px"}}>{children}</div>
     </>
   );
 }
