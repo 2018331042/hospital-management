@@ -84,7 +84,7 @@ const Items = {
       {
         title: "Login As Admin",
         id: "login-admin",
-        url: "/admin/login",
+        url: "/admin/auth/sign-in",
         icon: <PersonPinCircleOutlined />,
       },
     ],

@@ -13,12 +13,13 @@ import Head from "next/head";
 import React, { useCallback } from "react";
 import { useAuth } from "../utils/contexts/auth";
 import { useSidebar } from "../utils/contexts/sidebarContext";
-
+import useTilg from 'tilg';
 export default function Page({ children, title }) {
   const { setMode, setOpen } = useSidebar();
   const { isLoading, isLoggedIn, user } = useAuth();
-
+  useTilg();
   const makeSidebar = useCallback(() => {
+    console.log({user});
     if (isLoading || !isLoggedIn) {
       setMode("unauthenticated");
       return;
