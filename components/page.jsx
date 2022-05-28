@@ -3,6 +3,7 @@ import {
   AppBar,
   Button,
   CircularProgress,
+  Container,
   Grid,
   Link,
   Toolbar,
@@ -13,13 +14,13 @@ import Head from "next/head";
 import React, { useCallback } from "react";
 import { useAuth } from "../utils/contexts/auth";
 import { useSidebar } from "../utils/contexts/sidebarContext";
-import useTilg from 'tilg';
+import useTilg from "tilg";
 export default function Page({ children, title }) {
   const { setMode, setOpen } = useSidebar();
   const { isLoading, isLoggedIn, user } = useAuth();
   useTilg();
   const makeSidebar = useCallback(() => {
-    console.log({user});
+    console.log({ user });
     if (isLoading || !isLoggedIn) {
       setMode("unauthenticated");
       return;
@@ -54,7 +55,7 @@ export default function Page({ children, title }) {
     <>
       <Head>{title}</Head>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="fixed" color="inherit" sx={{ boxShadow: "none" }}>
+        <AppBar position="static" color="inherit" sx={{ boxShadow: "none", minHeight:'10vh' }}>
           <Toolbar
             variant="regular"
             style={{
@@ -84,7 +85,9 @@ export default function Page({ children, title }) {
           </Toolbar>
         </AppBar>
       </Box>
-      <div style={{display: "flex", direction:"column", alignItems:"center", padding: "20px"}}>{children}</div>
+      <div style={{minHeight:'100vh', justifyContent:'center'}}>
+        <Container maxWidth='xl'>{children}</Container>
+      </div>
     </>
   );
 }

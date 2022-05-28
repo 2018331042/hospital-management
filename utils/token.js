@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 
 
 export const createToken = (user, type) => {
+    console.log({type});
     return jwt.sign({
         email: user.email,
         name: user.name,

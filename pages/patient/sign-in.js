@@ -1,19 +1,19 @@
-import { Box, Button, Grid, Paper, TextField, Typography } from "@mui/material";
-import router from "next/router";
-import { useState } from "react";
-import Page from "../../components/page";
-import { useAuth } from "../../utils/contexts/auth";
+import { Box, Button, Grid, Paper, TextField, Typography } from '@mui/material';
+import router from 'next/router';
+import { useState } from 'react';
+import Page from '../../components/page';
+import { useAuth } from '../../utils/contexts/auth';
 
 const SignIn = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { signIn } = useAuth();
   const submitHandler = async () => {
     console.log({ email, password });
 
-    const response = await signIn(email, password, "patient");
+    const response = await signIn(email, password, 'patient');
     console.log({ response });
-    if (response.status === "SUCCESS") router.push("/");
+    if (response.status === 'SUCCESS') router.push('/');
   };
   return (
     <Page>
@@ -23,13 +23,13 @@ const SignIn = () => {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        sx={{ minHeight: "50vh", marginTop: "10vh" }}
+        sx={{ minHeight: '50vh', marginTop: '10vh' }}
       >
         <Paper elevation={3} sx={{ margin: 2 }}>
           <Typography
             variant="h5"
             component="h1"
-            sx={{ color: "Grey", fontWeight: "bold" }}
+            sx={{ color: 'Grey', fontWeight: 'bold' }}
             display="flex"
             justifyContent="center"
             marginTop="5vh"
@@ -45,7 +45,7 @@ const SignIn = () => {
                 autoComplete="Email"
                 variant="outlined"
                 margin="normal"
-                sx={{ width: "300px" }}
+                sx={{ width: '300px' }}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </Grid>
@@ -57,7 +57,7 @@ const SignIn = () => {
                 autoComplete="current-password"
                 variant="outlined"
                 margin="normal"
-                sx={{ width: "300px" }}
+                sx={{ width: '300px' }}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </Grid>

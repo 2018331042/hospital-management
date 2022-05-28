@@ -1,6 +1,6 @@
-import axios from "axios";
-import router from "next/router";
-import { createContext, useContext, useEffect, useState } from "react";
+import axios from 'axios';
+import router from 'next/router';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext();
 
@@ -9,13 +9,13 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [token, setToken] = useState(null);
   const [user, setUser] = useState({
-    email: "",
-    id: "",
-    type: "",
+    email: '',
+    id: '',
+    type: '',
   });
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     if (token === null) {
       setIsLoading(false);
       const routerName = router.pathname;
@@ -27,14 +27,14 @@ export const AuthProvider = ({ children }) => {
       ) {
         router.push(routerName);
       } else {
-        router.push("/");
+        router.push('/');
       }
       return;
     }
     setToken(token);
     console.log({ token });
     axios
-      .post("/api/verify-token", {
+      .post('/api/verify-token', {
         token,
       })
       .then((response) => {
@@ -50,8 +50,8 @@ export const AuthProvider = ({ children }) => {
           setUser({ email, id, type });
         } else {
           setIsLoggedIn(false);
-          setUser({ email: "", id: "", type: "" });
-          router.push("/");
+          setUser({ email: '', id: '', type: '' });
+          router.push('/');
         }
       });
   }, []);
@@ -64,13 +64,13 @@ export const AuthProvider = ({ children }) => {
     })
     console.log({ response });
     const { status, message, data } = response.data;
-    if (message === "FAILED") {
+    if (message === 'FAILED') {
       return { status, message };
     }
     const { token, email, type } = data;
-    localStorage.setItem("token", token);
+    localStorage.setItem('token', token);
     setToken(token);
-    setUser({email, type});
+    setUser({ email, type });
     setIsLoggedIn(true);
     setIsLoading(false);
     return { status, message };

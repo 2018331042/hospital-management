@@ -1,18 +1,23 @@
-import bcryptjs from "bcryptjs";
-import bcrypt from "bcryptjs/dist/bcrypt";
-import db from "../../../utils/db";
-import { FIND_ADMIN, FIND_DOCTOR, FIND_PATIENT } from "../../../utils/queries/sql-query";
-import { createToken } from "../../../utils/token";
+import bcryptjs from 'bcryptjs';
+import bcrypt from 'bcryptjs/dist/bcrypt';
+import db from '../../../utils/db';
+import {
+  FIND_ADMIN,
+  FIND_DOCTOR,
+  FIND_PATIENT,
+} from '../../../utils/queries/sql-query';
+import { createToken } from '../../../utils/token';
+
 export default async function handler(req, res) {
   const { email, password, type } = req.body;
 
   let responseObject = {
-    status: "",
-    message: "",
-    data: "",
+    status: '',
+    message: '',
+    data: '',
   };
 
-  if (type === "patient") {
+  if (type === 'patient') {
     responseObject = await signInPatient(email, password, type);
   } else if (type === "doctor") {
     responseObject = await signInDoctor(email, password,type);
@@ -22,7 +27,7 @@ export default async function handler(req, res) {
   res.send(responseObject);
 }
 
-const signInPatient = async (email, password,type) => {
+const signInPatient = async (email, password, type) => {
   try {
     const results = await db.query(FIND_PATIENT, [email]);
     console.log(results);
@@ -84,7 +89,6 @@ const signInDoctor = async (email, password,type) => {
         data: "",
       };
     }
-  };
 
   const signInAdmin = async (email, password,type) => {
     try {
@@ -116,5 +120,5 @@ const signInDoctor = async (email, password,type) => {
         data: "",
       };
     }
-  };
-
+  }
+};
