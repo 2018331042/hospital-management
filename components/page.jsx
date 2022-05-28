@@ -1,4 +1,4 @@
-import MenuIcon from "@mui/icons-material/Menu";
+import MenuIcon from '@mui/icons-material/Menu';
 import {
   AppBar,
   Button,
@@ -6,33 +6,33 @@ import {
   Grid,
   Link,
   Toolbar,
-  Typography
-} from "@mui/material";
-import { Box } from "@mui/system";
-import Head from "next/head";
-import React, { useCallback } from "react";
-import { useAuth } from "../utils/contexts/auth";
-import { useSidebar } from "../utils/contexts/sidebarContext";
+  Typography,
+} from '@mui/material';
+import { Box, padding } from '@mui/system';
+import Head from 'next/head';
+import React, { useCallback } from 'react';
+import { useAuth } from '../utils/contexts/auth';
+import { useSidebar } from '../utils/contexts/sidebarContext';
 
 export default function Page({ children, title }) {
   const { setMode, setOpen } = useSidebar();
   const { isLoading, isLoggedIn, user } = useAuth();
 
-  const makeSidebar = useCallback( () => {
+  const makeSidebar = useCallback(() => {
     if (isLoading || !isLoggedIn) {
-      setMode("unauthenticated");
+      setMode('unauthenticated');
       return;
     }
-    if(user.type === "patient") {
-      setMode("patient");
+    if (user.type === 'patient') {
+      setMode('patient');
     }
-    if(user.type === "doctor") {
-      setMode("doctor");
+    if (user.type === 'doctor') {
+      setMode('doctor');
     }
-    if(user.type === "admin") {
-      setMode("admin");
+    if (user.type === 'admin') {
+      setMode('admin');
     }
-  },[isLoading, isLoggedIn, user, setMode]);
+  }, [isLoading, isLoggedIn, user, setMode]);
 
   if (isLoading && !isLoggedIn) {
     return (
@@ -42,7 +42,7 @@ export default function Page({ children, title }) {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        style={{ minHeight: "100vh" }}
+        style={{ minHeight: '100vh' }}
       >
         <CircularProgress />
       </Grid>
@@ -53,21 +53,21 @@ export default function Page({ children, title }) {
     <>
       <Head>{title}</Head>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="fixed" color="inherit" sx={{ boxShadow: "none" }}>
+        <AppBar position="static" color="inherit" sx={{ boxShadow: 'none' }}>
           <Toolbar
             variant="regular"
             style={{
-              justifyContent: "space-between",
-              overflow: "hidden",
+              justifyContent: 'space-between',
+              overflow: 'hidden',
             }}
           >
             <Typography variant="h6" color="secondary" noWrap>
               <Box
                 sx={{
-                  fontWeight: "bold",
-                  color: "#1F5A1F",
-                  textDecoration: "none",
-                  justifyItems: "center",
+                  fontWeight: 'bold',
+                  color: '#1F5A1F',
+                  textDecoration: 'none',
+                  justifyItems: 'center',
                 }}
               >
                 <Button
@@ -83,8 +83,16 @@ export default function Page({ children, title }) {
           </Toolbar>
         </AppBar>
       </Box>
-      {children}
-      
+      <div
+        style={{
+          display: 'flex',
+          direction: 'column',
+          alignItems: 'center',
+          padding: '20px',
+        }}
+      >
+        {children}
+      </div>
     </>
   );
 }
