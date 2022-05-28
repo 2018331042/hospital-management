@@ -3,6 +3,7 @@ import {
   AppBar,
   Button,
   CircularProgress,
+  Container,
   Grid,
   Link,
   Toolbar,
@@ -50,7 +51,7 @@ export default function Page({ children, title }) {
   }
 
   return (
-    <>
+    <div>
       <Head>{title}</Head>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static" color="inherit" sx={{ boxShadow: 'none' }}>
@@ -86,13 +87,16 @@ export default function Page({ children, title }) {
       <div
         style={{
           display: 'flex',
+          flexGrow: 1,
           direction: 'column',
           alignItems: 'center',
-          padding: '20px',
+          minHeight: '80vh',
         }}
       >
-        {children}
+        <Container maxWidth="xl" md={4} xs={6} fixed={true}>
+          {children}
+        </Container>
       </div>
-    </>
+    </div>
   );
 }
