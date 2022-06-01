@@ -21,7 +21,7 @@ export default async function handler(req, res) {
     responseObject = await signInPatient(email, password, type);
   } else if (type === 'doctor') {
     responseObject = await signInDoctor(email, password, type);
-  } else {
+  } else if (type === 'admin') {
     responseObject = await signInAdmin(email, password, type);
   }
   res.send(responseObject);
@@ -33,7 +33,7 @@ const signInPatient = async (email, password, type) => {
     console.log(results);
     if (results.length === 0) {
       return {
-        status: 'error',
+        status: 'ERROR',
         message: 'Patient not found',
         data: '',
       };
@@ -44,7 +44,7 @@ const signInPatient = async (email, password, type) => {
       const token = createToken(user, type);
       console.log({ token });
       return {
-        status: 'success',
+        status: 'SUCCESS',
         message: 'Patient signed in',
         data: { ...results[0], token, type },
       };
@@ -52,20 +52,20 @@ const signInPatient = async (email, password, type) => {
   } catch (err) {
     console.log({ err });
     return {
-      status: 'error',
+      status: 'ERROR',
       message: 'Error signing in',
       data: '',
     };
   }
 };
 
-const signInDoctor = async (email, password) => {
+const signInDoctor = async (email, password, type) => {
   try {
     const results = await db.query(FIND_DOCTOR, [email]);
     console.log(results);
     if (results.length === 0) {
       return {
-        status: 'error',
+        status: 'ERROR',
         message: 'Patient not found',
         data: '',
       };
@@ -76,29 +76,28 @@ const signInDoctor = async (email, password) => {
       const token = createToken(user, 'doctor');
       console.log({ token });
       return {
-        status: 'success',
+        status: 'SUCCESS',
         message: 'Patient signed in',
-        data: { user, token },
+        data: { ...results[0], token, type },
       };
     }
   } catch (err) {
     console.log({ err });
     return {
-      status: 'error',
+      status: 'ERROR',
       message: 'Error signing in',
       data: '',
     };
   }
 };
-
-const signInAdmin = async (email, password) => {
+const signInAdmin = async (email, password, type) => {
   try {
     const results = await db.query(FIND_ADMIN, [email]);
     console.log(results);
     if (results.length === 0) {
       return {
-        status: 'error',
-        message: 'Patient not found',
+        status: 'ERROR',
+        message: 'Admin not found',
         data: '',
       };
     }
@@ -108,15 +107,15 @@ const signInAdmin = async (email, password) => {
       const token = createToken(user, 'admin');
       console.log({ token });
       return {
-        status: 'success',
-        message: 'Patient signed in',
-        data: { user, token },
+        status: 'SUCCESS',
+        message: 'Admin signed in',
+        data: { ...results[0], token, type },
       };
     }
   } catch (err) {
     console.log({ err });
     return {
-      status: 'error',
+      status: 'ERROR',
       message: 'Error signing in',
       data: '',
     };

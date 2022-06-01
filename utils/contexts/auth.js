@@ -20,10 +20,10 @@ export const AuthProvider = ({ children }) => {
       setIsLoading(false);
       const routerName = router.pathname;
       if (
-        router.pathname === '/patient/sign-in' ||
-        router.pathname === '/patient/sign-up' ||
-        router.pathname === 'doctor/sign-in' ||
-        router.pathname === 'admin/sign-in'
+        router.pathname === "/patient/sign-in" ||
+        router.pathname === "/patient/sign-up" ||
+        router.pathname === "/doctor/auth/sign-in" ||
+        router.pathname === "/admin/auth/sign-in"
       ) {
         router.push(routerName);
       } else {
@@ -57,12 +57,12 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const signIn = async (userEmail, password, userType) => {
-    setIsLoading(true);
-    const response = await axios.post('/api/auth/sign-in', {
+    const response = await axios.post("/api/auth/sign-in", {
       email: userEmail,
       password,
-      type: userType,
-    });
+      type:userType,
+    })
+    console.log({ response });
     const { status, message, data } = response.data;
     if (message === 'FAILED') {
       return { status, message };

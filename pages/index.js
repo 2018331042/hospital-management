@@ -14,31 +14,37 @@ const departments = [
   {
     deptName: 'Cardiology',
     numberOfDoctors: '10',
+    deptCode:1,
     image: '/images/cardiology.jpg',
   },
   {
     deptName: 'Dermatology',
     numberOfDoctors: '10',
+    deptCode:2,
     image: '/images/cardiology.jpg',
   },
   {
     deptName: 'Gastroenterology',
     numberOfDoctors: '10',
+    deptCode:3,
     image: '/images/cardiology.jpg',
   },
   {
     deptName: 'General Surgery',
     numberOfDoctors: '10',
+    deptCode:4,
     image: '/images/cardiology.jpg',
   },
   {
     deptName: 'Neurology',
     numberOfDoctors: '10',
+    deptCode:5,
     image: '/images/cardiology.jpg',
   },
   {
     deptName: 'Nephrology',
     numberOfDoctors: '10',
+    deptCode:6,
     image: '/images/cardiology.jpg',
   },
 ];
@@ -50,9 +56,9 @@ export default function Home() {
       <div>
         <Grid container spacing={3}>
           {departments.map((department) => (
-            <Grid item md={4} key={department.deptName}>
+            <Grid item md={3} xs= {6} key={department.deptName}>
               <Card>
-                <NextLink href="/" passHref>
+                <NextLink href={`department/${department.deptCode}`} passHref>
                   <CardActionArea>
                     <CardMedia
                       component="img"

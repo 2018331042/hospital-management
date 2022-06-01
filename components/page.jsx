@@ -14,12 +14,13 @@ import Head from 'next/head';
 import React, { useCallback } from 'react';
 import { useAuth } from '../utils/contexts/auth';
 import { useSidebar } from '../utils/contexts/sidebarContext';
-
+import useTilg from 'tilg';
 export default function Page({ children, title }) {
   const { setMode, setOpen } = useSidebar();
   const { isLoading, isLoggedIn, user } = useAuth();
-
+  useTilg();
   const makeSidebar = useCallback(() => {
+    console.log({ user });
     if (isLoading || !isLoggedIn) {
       setMode('unauthenticated');
       return;
@@ -54,7 +55,11 @@ export default function Page({ children, title }) {
     <div>
       <Head>{title}</Head>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static" color="inherit" sx={{ boxShadow: 'none' }}>
+        <AppBar
+          position="static"
+          color="inherit"
+          sx={{ boxShadow: 'none', minHeight: '10vh' }}
+        >
           <Toolbar
             variant="regular"
             style={{
@@ -84,18 +89,8 @@ export default function Page({ children, title }) {
           </Toolbar>
         </AppBar>
       </Box>
-      <div
-        style={{
-          display: 'flex',
-          flexGrow: 1,
-          direction: 'column',
-          alignItems: 'center',
-          minHeight: '80vh',
-        }}
-      >
-        <Container maxWidth="xl" md={4} xs={6} fixed={true}>
-          {children}
-        </Container>
+      <div style={{ minHeight: '100vh', justifyContent: 'center' }}>
+        <Container maxWidth="xl">{children}</Container>
       </div>
     </div>
   );
