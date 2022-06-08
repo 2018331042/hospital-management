@@ -7,6 +7,7 @@ const db = mysql({
     password: 'db_user_pass',
     port: 6033,
     database: 'HospitalDB',
+    insecureAuth: true,
   },
 });
 
