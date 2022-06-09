@@ -82,7 +82,9 @@ export default function Page({ children, title }) {
                 >
                   <MenuIcon />
                 </Button>
-                <Link href="/">Hospital Management</Link>
+                <Link href="/" sx={{ textDecoration: 'none' }}>
+                  Hospital Management
+                </Link>
               </Box>
             </Typography>
             <div>{makeSidebar()}</div>

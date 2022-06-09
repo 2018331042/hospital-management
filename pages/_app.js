@@ -1,15 +1,15 @@
-import { Sidebar } from "../components/sidebar";
-import "../styles/globals.css";
-import { AuthProvider } from "../utils/contexts/auth";
-import { SidebarProvider } from "../utils/contexts/sidebarContext";
+import { Sidebar } from '../components/sidebar';
+import '../styles/globals.css';
+import { AuthProvider } from '../utils/contexts/auth';
+import { SidebarProvider } from '../utils/contexts/sidebarContext';
 function MyApp({ Component, pageProps }) {
   return (
     <SidebarProvider>
-      <Sidebar>
-        <AuthProvider>
+      <AuthProvider>
+        <Sidebar>
           <Component {...pageProps} />
-        </AuthProvider>
-      </Sidebar>
+        </Sidebar>
+      </AuthProvider>
     </SidebarProvider>
   );
 }

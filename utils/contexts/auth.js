@@ -16,20 +16,24 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
+    const value = router.query.deptCode;
+    console.log({ value });
+    console.log({ pathname: router.pathname });
     if (token === null) {
       setIsLoading(false);
-      const routerName = router.pathname;
-      if (
-        router.pathname === "/patient/sign-in" ||
-        router.pathname === "/patient/sign-up" ||
-        router.pathname === "/doctor/auth/sign-in" ||
-        router.pathname === "/admin/auth/sign-in"
-      ) {
-        router.push(routerName);
-      } else {
+      const isPublicRoute = [
+        '/admin/sign-in',
+        '/doctor/sign-in',
+        '/patient/sign-in',
+        '/patient/sign-up',
+        `/department/${value}`,
+      ].some((e) => {
+        e === router.pathname;
+      });
+
+      if (!isPublicRoute) {
         router.push('/');
       }
-      return;
     }
     setToken(token);
     console.log({ token });
@@ -57,11 +61,11 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const signIn = async (userEmail, password, userType) => {
-    const response = await axios.post("/api/auth/sign-in", {
+    const response = await axios.post('/api/auth/sign-in', {
       email: userEmail,
       password,
-      type:userType,
-    })
+      type: userType,
+    });
     console.log({ response });
     const { status, message, data } = response.data;
     if (message === 'FAILED') {
@@ -76,9 +80,18 @@ export const AuthProvider = ({ children }) => {
     return { status, message };
   };
 
+  const signOut = () => {
+    localStorage.removeItem('token');
+    setToken(null);
+    setUser({
+      type: 'unauthenticated',
+    });
+    return { status: 'logout', messasge: 'logout successful' };
+  };
+
   return (
     <AuthContext.Provider
-      value={{ isLoading, isLoggedIn, token, user, setUser, signIn }}
+      value={{ isLoading, isLoggedIn, token, user, setUser, signIn, signOut }}
     >
       {children}
     </AuthContext.Provider>

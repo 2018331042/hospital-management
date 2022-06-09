@@ -1,48 +1,47 @@
-import { Grid, Typography } from "@mui/material";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
-import TextField from "@mui/material/TextField";
-import axios from "axios";
-import { useState } from "react";
-import Appbar from "../../components/NavBar";
+import { Grid, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import TextField from '@mui/material/TextField';
+import axios from 'axios';
+import { useState } from 'react';
+import Appbar from '../../components/NavBar';
+import Page from '../../components/page';
 
 export default function CreateDepartment() {
-  const [deptName, setDeptName] = useState("");
-  const [deptCode, setDeptCode] = useState("");
-  const submitHandler = async() => {
+  const [deptName, setDeptName] = useState('');
+  const [deptCode, setDeptCode] = useState('');
+  const submitHandler = async () => {
     console.log({ deptName, deptCode });
 
-    const response = await axios.post("/api/admin/create-department", {
+    const response = await axios.post('/api/admin/create-department', {
       deptName,
       deptCode,
-      
-    })
+    });
 
     console.log({ response });
-  }
+  };
   return (
-    <>
-      <Appbar />
+    <Page>
       <Grid
         container
         spacing={2}
         direction="column"
         alignItems="center"
         justifyContent="center"
-        sx={{ marginTop: "10vh" }}
+        sx={{ marginTop: '10vh' }}
       >
         <Paper elevation={3} sx={{ margin: 2 }}>
-        <Typography
-          variant="h5"
-          component="h1"
-          sx={{ color: "Grey", fontWeight: "bold" }}
-          display="flex"
-          justifyContent="center"
-          marginTop="5vh"
-        >
-          Create Department
-        </Typography>
+          <Typography
+            variant="h5"
+            component="h1"
+            sx={{ color: 'Grey', fontWeight: 'bold' }}
+            display="flex"
+            justifyContent="center"
+            marginTop="5vh"
+          >
+            Create Department
+          </Typography>
           <Box sx={{ margin: 5 }}>
             <Grid item md={12} lg={12}>
               <TextField
@@ -52,7 +51,7 @@ export default function CreateDepartment() {
                 autoComplete="Department Name"
                 variant="outlined"
                 margin="normal"
-                sx={{ width: "300px" }}
+                sx={{ width: '300px' }}
                 onChange={(e) => setDeptName(e.target.value)}
               />
             </Grid>
@@ -64,7 +63,7 @@ export default function CreateDepartment() {
                 autoComplete="Department Code"
                 variant="outlined"
                 margin="normal"
-                sx={{ width: "300px" }}
+                sx={{ width: '300px' }}
                 onChange={(e) => setDeptCode(e.target.value)}
               />
             </Grid>
@@ -74,6 +73,6 @@ export default function CreateDepartment() {
           Submit
         </Button>
       </Grid>
-    </>
+    </Page>
   );
 }
