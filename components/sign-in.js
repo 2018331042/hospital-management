@@ -5,61 +5,52 @@ import {
   Group,
   Box,
   PasswordInput,
+  Loader,
+  LoadingOverlay,
+  Alert,
   Title,
-  Select,
 } from "@mantine/core";
 import { useForm, yupResolver } from "@mantine/form";
-import Page from "../../components/page";
+import Page from "./page";
+import * as Yup from "yup";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { useAuth } from "../../utils/contexts/auth";
+import { useAuth } from "../utils/contexts/auth";
 import { showNotification } from "@mantine/notifications";
 import { Check, X } from "tabler-icons-react";
-import { DatePicker } from "@mantine/dates";
-import axios from "axios";
-import bcrypt from "bcryptjs";
-import { formSchema } from "../../components/formValidation/signupForm";
+import  Link  from "next/link";
 
-function SignIn() {
+const formSchema = Yup.object().shape({
+  email: Yup.string().email("invalid email"),
+});
+
+function SignIn({ type }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { signIn } = useAuth();
 
   const form = useForm({
     schema: yupResolver(formSchema),
     initialValues: {
-      name: "",
       email: "",
       password: "",
-      gender: "",
-      dob: "",
     },
   });
 
   const handleSubmit = async (values) => {
     setLoading(true);
     console.log({ values });
-    const { email, password, gender, dob, name } = values;
-    console.log({ age: parseInt(new Date().getFullYear) - parseInt(dob.getFullYear())});
-    if(new Date() > dob){
-      console.log("okk")
-    }
-    // const response = await axios.post("/api/patient/sign-up", {
-    //   name,
-    //   email,
-    //   password: bcrypt.hashSync(password, 10),
-    //   gender,
-    //   age: new Date().getFullYear - dob.getFullYear(),
-    // });
-    // const { status, message } = response;
+    const { email, password } = values;
+    const response = await signIn(email, password, type);
+    const { status, message } = response;
     console.log({ response });
     if (status === "SUCCESS") {
       setLoading(false);
-      router.push("/patient/sign-in");
+      router.push("/admin/dashboard");
       showNotification({
         allowClose: true,
-        title: "Registered Successful",
-        message:
-          "You have successfully Registered. Redirecting to Login page...",
+        title: "Login Successful",
+        message: "You have successfully logged in. Redirecting to dashboard...",
         styles: (theme) => ({
           root: {
             backgroundColor: theme.colors.blue[6],
@@ -109,16 +100,10 @@ function SignIn() {
       <Box sx={{ maxWidth: 300, marginTop: "20vh" }} mx="auto">
         <div>
           <Title order={3} sx={{ textAlign: "center", marginTop: "40px" }}>
-            PATIENT REGISTER
+            {type.toUpperCase()} LOGIN
           </Title>
         </div>
         <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
-          <TextInput
-            required
-            label="name"
-            placeholder="your name"
-            {...form.getInputProps("name")}
-          />
           <TextInput
             required
             label="Email"
@@ -131,24 +116,22 @@ function SignIn() {
             placeholder="password"
             {...form.getInputProps("password")}
           />
-          <Select
-            required
-            label="gender"
-            placeholder="Pick one"
-            data={["Male", "Female"]}
-            {...form.getInputProps("gender")}
-          />
-          <DatePicker
-            placeholder="Pick date"
-            label="Date of Birth"
-            required
-            {...form.getInputProps("dob")}
-          />
+
           <Group position="right" mt="md">
             <Button type="submit" color="green" loading={loading}>
               Submit
             </Button>
           </Group>
+          {type === "patient" && (
+            <div style={{ marginTop: "5px" }}>
+              <Title order={6} sx={{ textAlign: "center" }}>
+                Don't have an account?{" "}
+                <Link href="/patient/sign-up">
+                  <a style={{ color: "blue" }} >Sign Up</a>
+                </Link>
+              </Title>
+            </div>
+          )}
         </form>
       </Box>
     </Page>

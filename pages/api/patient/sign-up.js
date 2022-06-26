@@ -2,8 +2,8 @@ import db from "../../../utils/db";
 import { FIND_PATIENT, INSERT_PATIENT_ONE } from "../../../utils/queries/sql-query";
 
 export default async function handler(req,res) {
-    const {email, password} = req.body;
-    console.log({email, password});
+    const {email, password, name, age, gender} = req.body;
+    console.log({email, password, name, age, gender});
 
 
     try{
@@ -15,7 +15,8 @@ export default async function handler(req,res) {
             });
         }
 
-        const response = db.query(INSERT_PATIENT_ONE, [email, password]);
+        const response = db.query(INSERT_PATIENT_ONE, [email, password, name, age, gender]);
+        console.log({response})
         if(response.affectedRows > 0){
             return res.json({
                 status: "SUCCESS",

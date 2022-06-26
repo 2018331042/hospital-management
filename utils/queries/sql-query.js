@@ -1,9 +1,8 @@
+export const INSERT_ONE_DEPARTMENT = `INSERT INTO DEPARTMENT (name, code) VALUES (?, ?)`;
 
-export const INSERT_ONE_DEPARTMENT =`INSERT INTO DEPARTMENT (name, code) VALUES (?, ?)`;
+export const INSERT_ONE_DOCTOR = `INSERT INTO DOCTOR (email, password, dept_code) VALUES (?, ?, ?)`;
 
-export const INSERT_ONE_DOCTOR =`INSERT INTO DOCTOR (email, password, dept_code) VALUES (?, ?, ?)`;
-
-export const INSERT_PATIENT_ONE = `INSERT INTO PATIENT (email, password) VALUES (?, ?)`;
+export const INSERT_PATIENT_ONE = `INSERT INTO PATIENT (email, password, name, age, gender) VALUES (?,?,?,?,?)`;
 
 export const FIND_PATIENT = `SELECT * FROM PATIENT WHERE email = ?`;
 
@@ -20,7 +19,6 @@ export const CREATE_DOCTOR_TABLE = `CREATE TABLE DOCTOR(
    dept_code INTEGER,
    FOREIGN KEY(dept_code) REFERENCES DEPARTMENT(code)
 )`;
-
 
 export const CREATE_PATIENT_TABLE = `CREATE TABLE PATIENT(
    email VARCHAR(30) PRIMARY KEY,
