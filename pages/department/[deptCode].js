@@ -17,14 +17,14 @@ import NextLink from 'next/link';
 
 const doctorList = [
   {
-    DocId: 101,
+    docId: 101,
     DoctorName: 'Arif',
     DoctorSpeciality: 'Cardiologist',
     DoctorImage:
       'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
   },
   {
-    DocId: 102,
+    docId: 102,
     DoctorName: 'Barif',
     DoctorSpeciality: 'Cardiologist',
     DoctorImage:
@@ -32,49 +32,49 @@ const doctorList = [
   },
 
   {
-    DocId: 103,
+    docId: 103,
     DoctorName: 'Carif',
     DoctorSpeciality: 'Cardiologist',
     DoctorImage:
       'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
   },
   {
-    DocId: 109,
+    docId: 109,
     DoctorName: 'Darif',
     DoctorSpeciality: 'Cardiologist',
     DoctorImage:
       'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
   },
   {
-    DocId: 104,
+    docId: 104,
     DoctorName: 'Earif',
     DoctorSpeciality: 'Cardiologist',
     DoctorImage:
       'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
   },
   {
-    DocId: 105,
+    docId: 105,
     DoctorName: 'Farif',
     DoctorSpeciality: 'Cardiologist',
     DoctorImage:
       'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
   },
   {
-    DocId: 106,
+    docId: 106,
     DoctorName: 'Garif',
     DoctorSpeciality: 'Cardiologist',
     DoctorImage:
       'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
   },
   {
-    DocId: 107,
+    docId: 107,
     DoctorName: 'Harif',
     DoctorSpeciality: 'Cardiologist',
     DoctorImage:
       'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
   },
   {
-    DocId: 108,
+    docId: 108,
     DoctorName: 'Iarif',
     DoctorSpeciality: 'Cardiologist',
     DoctorImage:
@@ -101,8 +101,16 @@ export default function DoctorList() {
         <Grid container spacing={4}>
           {doctorList.map((doc) => (
             <Grid item md={3} xs={12} key={doc.DocId}>
-              <Card>
-                <NextLink href={`department/${doc.DoctorName}`} passHref>
+              <Card
+                sx={{
+                  ':hover': {
+                    boxShadow: 20,
+                    border: '2px solid orange', // theme.shadows[20]
+                    transitionDuration: '500ms',
+                  },
+                }}
+              >
+                <NextLink href={`/department/doctor/${doc.docId}`} passHref>
                   <CardActionArea style={{ justifyContent: 'center' }}>
                     <Grid container direction="column" spacing={1}>
                       <Grid item container md={3} xs={6}>

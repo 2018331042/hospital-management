@@ -68,7 +68,17 @@ export default function Home() {
         <Grid container spacing={3}>
           {departments.map((department) => (
             <Grid item md={3} xs={6} key={department.deptName}>
-              <Card>
+              <Card
+                sx={{
+                  boxShadow: 10,
+                  ':hover': {
+                    boxShadow: 20,
+                    border: '3px solid gray', // theme.shadows[20]
+                    transitionDuration: '500ms',
+                    background: '#bde7ff',
+                  },
+                }}
+              >
                 <NextLink href={`department/${department.deptCode}`} passHref>
                   <CardActionArea>
                     <CardMedia
