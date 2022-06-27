@@ -71,15 +71,20 @@ const signInDoctor = async (email, password, type) => {
       };
     }
 
-    if (password === results[0].password) {
+    if (bcrypt.compareSync(password, results[0].password)) {
       const user = results[0];
-      const token = createToken(user, "doctor");
+      const token = createToken(user, type);
       console.log({ token });
       return {
         status: "SUCCESS",
-        message: "Patient signed in",
+        message: "Doctor signed in",
         data: { ...results[0], token, type },
       };
+    }
+    return{
+      status: "ERROR",
+      message: "Wrong Credentials",
+      data: "",
     }
   } catch (err) {
     console.log({ err });

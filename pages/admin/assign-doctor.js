@@ -1,68 +1,36 @@
-import {
-  TextInput,
-  Checkbox,
-  Button,
-  Group,
-  Box,
-  PasswordInput,
-  Loader,
-  LoadingOverlay,
-  Alert,
-  Title,
-} from "@mantine/core";
-import { useForm, yupResolver } from "@mantine/form";
-import Page from "./page";
-import * as Yup from "yup";
-import { useState } from "react";
-import { useRouter } from "next/router";
-import { useAuth } from "../utils/contexts/auth";
+import { TextInput, Checkbox, Button, Group, Box, Title } from "@mantine/core";
+import { useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
+import axios from "axios";
+import { useState } from "react";
 import { Check, X } from "tabler-icons-react";
-import Link from "next/link";
-
-const formSchema = Yup.object().shape({
-  email: Yup.string().email("invalid email"),
-});
-
-function SignIn({ type }) {
+import Page from "../../components/page";
+function AssignDoctor() {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
-  const { signIn } = useAuth();
-
   const form = useForm({
-    schema: yupResolver(formSchema),
     initialValues: {
+      deptCode: null,
       email: "",
-      password: "",
     },
   });
-
-  const whichRouter = (type) => {
-    switch (type) {
-      case "patient":
-        return "/";
-      case "doctor":
-        return "/doctor/dashboard";
-      case "admin":
-        return "/admin/dashboard";
-    }
-  };
 
   const handleSubmit = async (values) => {
     setLoading(true);
     console.log({ values });
-    const { email, password } = values;
-    const response = await signIn(email, password, type);
-    const { status, message } = response;
+    const { email, deptCode } = values;
+    const response = await axios.post("/api/admin/assign-doctor", {
+      deptCode,
+      email,
+      password: Math.floor(Math.random() * (1000000 - 100000) + 10000),
+    });
     console.log({ response });
+    const { status, message } = response.data;
     if (status === "SUCCESS") {
       setLoading(false);
-      const path = whichRouter(type);
-      router.push(path);
       showNotification({
         allowClose: true,
-        title: "Login Successful",
-        message: "You have successfully logged in. Redirecting to dashboard...",
+        title: "SUCCESS",
+        message: message,
         styles: (theme) => ({
           root: {
             backgroundColor: theme.colors.blue[6],
@@ -85,7 +53,7 @@ function SignIn({ type }) {
     setLoading(false);
     showNotification({
       allowClose: true,
-      title: "Login Unsccessful",
+      title: "UNSUCCESSFUL",
       message: message,
       styles: (theme) => ({
         root: {
@@ -112,42 +80,31 @@ function SignIn({ type }) {
       <Box sx={{ maxWidth: 300, marginTop: "20vh" }} mx="auto">
         <div>
           <Title order={3} sx={{ textAlign: "center", marginTop: "40px" }}>
-            {type.toUpperCase()} LOGIN
+            ASSIGN DOCTOR
           </Title>
         </div>
         <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
           <TextInput
             required
-            label="Email"
-            placeholder="your@email.com"
+            label="Deptartment code"
+            placeholder="Department code"
+            {...form.getInputProps("deptCode")}
+          />
+          <TextInput
+            required
+            label="email"
+            placeholder="Doctor Email"
             {...form.getInputProps("email")}
           />
-          <PasswordInput
-            required
-            label="password"
-            placeholder="password"
-            {...form.getInputProps("password")}
-          />
-
           <Group position="right" mt="md">
-            <Button type="submit" color="green" loading={loading}>
+            <Button type="submit" loading={loading}>
               Submit
             </Button>
           </Group>
-          {type === "patient" && (
-            <div style={{ marginTop: "5px" }}>
-              <Title order={6} sx={{ textAlign: "center" }}>
-                Don't have an account?{" "}
-                <Link href="/patient/sign-up">
-                  <a style={{ color: "blue" }}>Sign Up</a>
-                </Link>
-              </Title>
-            </div>
-          )}
         </form>
       </Box>
     </Page>
   );
 }
 
-export default SignIn;
+export default AssignDoctor;

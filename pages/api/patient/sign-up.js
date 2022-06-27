@@ -7,7 +7,7 @@ export default async function handler(req,res) {
 
 
     try{
-        const result = db.query(FIND_PATIENT, [email]);
+        const result = await db.query(FIND_PATIENT, [email]);
         if(result.length > 0){
             return res.json({
                 status: "ERROR",
@@ -15,7 +15,7 @@ export default async function handler(req,res) {
             });
         }
 
-        const response = db.query(INSERT_PATIENT_ONE, [email, password, name, age, gender]);
+        const response = await db.query(INSERT_PATIENT_ONE, [email, password, name, age, gender]);
         console.log({response})
         if(response.affectedRows > 0){
             return res.json({

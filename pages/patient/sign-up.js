@@ -19,6 +19,7 @@ import { DatePicker } from "@mantine/dates";
 import axios from "axios";
 import bcrypt from "bcryptjs";
 import { formSchema } from "../../components/formValidation/signupForm";
+import Link from "next/link";
 
 function SignIn() {
   const [loading, setLoading] = useState(false);
@@ -27,10 +28,10 @@ function SignIn() {
   const form = useForm({
     schema: yupResolver(formSchema),
     initialValues: {
-      name: "",
-      email: "",
-      password: "",
-      gender: "",
+      name: "aaa",
+      email: "a@gmail.com",
+      password: "123advcs",
+      gender: "Male",
       dob: "",
     },
   });
@@ -39,18 +40,40 @@ function SignIn() {
     setLoading(true);
     console.log({ values });
     const { email, password, gender, dob, name } = values;
-    console.log({ age: parseInt(new Date().getFullYear) - parseInt(dob.getFullYear())});
-    if(new Date() > dob){
-      console.log("okk")
+    if(new Date().getFullYear() < dob.getFullYear()){
+      setLoading(false);
+      showNotification({
+        allowClose: true,
+        title: "INVALID YEAR",
+        message: "please enter valid date of birth",
+        styles: (theme) => ({
+          root: {
+            backgroundColor: theme.colors.blue[6],
+            borderColor: theme.colors.blue[6],
+  
+            "&::before": { backgroundColor: theme.white },
+          },
+  
+          title: { color: theme.white },
+          description: { color: theme.white },
+          closeButton: {
+            color: theme.white,
+            "&:hover": { backgroundColor: theme.colors.blue[7] },
+          },
+        }),
+        icon: <X strokeWidth={2.5} color="red" size={48} />,
+        autoClose: 5000,
+      });
+      return;
     }
-    // const response = await axios.post("/api/patient/sign-up", {
-    //   name,
-    //   email,
-    //   password: bcrypt.hashSync(password, 10),
-    //   gender,
-    //   age: new Date().getFullYear - dob.getFullYear(),
-    // });
-    // const { status, message } = response;
+    const response = await axios.post("/api/patient/sign-up", {
+      name,
+      email,
+      password: bcrypt.hashSync(password, 10),
+      gender,
+      age: parseInt(new Date().toISOString().substr(0,4))-parseInt(dob.toISOString().substr(0,4)) ,
+    });
+    const { status, message } = response.data;
     console.log({ response });
     if (status === "SUCCESS") {
       setLoading(false);
@@ -76,6 +99,7 @@ function SignIn() {
           },
         }),
         icon: <Check strokeWidth={2.5} color={"#55bf40"} size={48} />,
+        
       });
       return;
     }
@@ -149,6 +173,14 @@ function SignIn() {
               Submit
             </Button>
           </Group>
+          <div style={{ marginTop: "5px" }}>
+              <Title order={6} sx={{ textAlign: "center" }}>
+                Already have an account?{" "}
+                <Link href="/patient/sign-in">
+                  <a style={{ color: "blue" }}>Sign in</a>
+                </Link>
+              </Title>
+            </div>
         </form>
       </Box>
     </Page>
