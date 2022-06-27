@@ -16,24 +16,21 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const value = router.query.deptCode;
-    console.log({ value });
     console.log({ pathname: router.pathname });
     if (token === null) {
       setIsLoading(false);
       const isPublicRoute = [
         '/admin/sign-in',
         '/doctor/sign-in',
-        '/patient/sign-in',
-        '/patient/sign-up',
-        `/department/${value}`,
+        '/patient',
       ].some((e) => {
         e === router.pathname;
       });
 
-      if (!isPublicRoute) {
-        router.push('/');
-      }
+      // if (!isPublicRoute) {
+      //   router.push('/');
+      // }
+      return;
     }
     setToken(token);
     console.log({ token });
@@ -68,7 +65,7 @@ export const AuthProvider = ({ children }) => {
     });
     console.log({ response });
     const { status, message, data } = response.data;
-    if (message === 'FAILED') {
+    if (status === 'ERROR') {
       return { status, message };
     }
     const { token, email, type } = data;

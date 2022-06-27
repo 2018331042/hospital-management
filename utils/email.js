@@ -12,6 +12,7 @@ const sendEmail = async (email, subject, message) => {
 
     try{
         await sgMail.send(msg);
+        console.log(`${message} sent to this ${email}`);
     }catch(error){
         console.log(error.response.body.errors);
     }
