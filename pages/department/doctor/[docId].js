@@ -109,9 +109,6 @@ export default function DoctorProfile() {
                   arifshahriar@gmail.com
                 </Typography>
               </ListItem>
-              <ListItem>
-                <Button>Edit Profile</Button>
-              </ListItem>
             </List>
           </Grid>
           <Grid
