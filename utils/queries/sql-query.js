@@ -12,6 +12,8 @@ export const FIND_ADMIN = `SELECT * FROM ADMIN WHERE email = ?`;
 
 export const DEPT_EXIST = `SELECT * FROM DEPARTMENT WHERE code = ?`;
 
+export const GET_DEPT_INFO = `SELECT * FROM DEPARTMENT`;
+
 export const CREATE_DOCTOR_TABLE = `CREATE TABLE DOCTOR(
    id INTEGER PRIMARY KEY,
    email VARCHAR(30) NOT NULL,

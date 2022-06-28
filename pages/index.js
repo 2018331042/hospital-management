@@ -9,6 +9,9 @@ import {
 import Page from '../components/page';
 import { useAuth } from '../utils/contexts/auth';
 import NextLink from 'next/link';
+import axios from 'axios';
+import db from '../utils/db';
+import { GET_DEPT_INFO } from '../utils/queries/sql-query';
 
 const departments = [
   {
@@ -49,7 +52,7 @@ const departments = [
   },
 ];
 
-export default function Home() {
+export default function Home({ departments }) {
   const { isLoggedIn, isLoading, token, user } = useAuth();
   return (
     <Page>
@@ -67,7 +70,7 @@ export default function Home() {
       <div>
         <Grid container spacing={3}>
           {departments.map((department) => (
-            <Grid item md={3} xs={6} key={department.deptName}>
+            <Grid item md={3} xs={6} key={department.name}>
               <Card
                 sx={{
                   boxShadow: 10,
@@ -79,15 +82,16 @@ export default function Home() {
                   },
                 }}
               >
-                <NextLink href={`department/${department.deptCode}`} passHref>
+                <NextLink href={`department/${department.code}`} passHref>
                   <CardActionArea>
                     <CardMedia
                       component="img"
-                      image={department.image}
-                      title={department.deptName}
+                      image="/images/cardiology.jpg"
+                      title={department.name}
                     ></CardMedia>
                     <CardContent>
-                      <Typography>{department.deptName}</Typography>
+                      <Typography>{department.name}</Typography>
+                      <Typography>Doctors: {department.total_doctor}</Typography>
                     </CardContent>
                   </CardActionArea>
                 </NextLink>
@@ -98,4 +102,17 @@ export default function Home() {
       </div>
     </Page>
   );
+}
+
+
+export async function getStaticProps(ctx){
+  const res = await db.query(GET_DEPT_INFO);
+  const departments = JSON.parse(JSON.stringify(res));
+  console.log({ departments });
+  return {
+    props: {
+      departments,
+    }
+  }
+
 }
