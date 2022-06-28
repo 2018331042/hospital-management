@@ -1,22 +1,13 @@
-import mysql from 'mysql';
+import mysql from "serverless-mysql";
 
-const connection = mysql.createConnection({
+const db = mysql({
+  config: {
     host: "localhost",
     user: "db_user",
     password: "db_user_pass",
     port: 6033,
-    database: "HospitalDB"
+    database: "HospitalDB",
+  },
 });
 
-connection.connect((err, client) => {
-    console.log({ client })
-    if (err) {
-        console.log({ err });
-    } else {
-        console.log("connected");
-    }
-})
-
-
-
-export default connection;
+export default db;
