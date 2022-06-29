@@ -19,6 +19,14 @@ export const GET_DEPT_DOCTORS = `SELECT * FROM DOCTOR WHERE dept_code = ?`;
 
 export const GET_DEPT_CODE_AND_NAME = `SELECT code, name FROM DEPARTMENT`;
 
+export const INSERT_BOOKED_DOCTORS = `INSERT INTO BOOKED_DOCTORS (patient_email, doc_id) VALUES (?, ?)`;
+
+export const UPDATE_DEPT_TOTAL_DOCTOR = `UPDATE DEPARTMENT SET total_doctor = ? WHERE code = ?`;
+
+export const FIND_DOCTOR_BY_ID = `SELECT P.email, P.name, P.gender FROM BOOKED_DOCTORS AS BD 
+INNER JOIN PATIENT AS P ON
+BD.patient_email = P.email WHERE BD.doc_id = ?`;
+
 export const CREATE_DOCTOR_TABLE = `CREATE TABLE DOCTOR(
 	id INTEGER PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(50) NOT NULL,
@@ -50,4 +58,4 @@ export const CREATE_BOOKED_DOCTORS_TABLE = `CREATE TABLE BOOKED_DOCTORS(
     
     FOREIGN KEY(patient_email) REFERENCES PATIENT(email),
     FOREIGN KEY(doc_id) REFERENCES DOCTOR(id)
-)`
+)`;

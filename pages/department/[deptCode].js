@@ -17,13 +17,32 @@ import {
 import NextLink from "next/link";
 import db from "../../utils/db";
 import { GET_DEPT_DOCTORS } from "../../utils/queries/sql-query";
+import { useAuth } from "../../utils/contexts/auth";
+import axios from "axios";
 
 export default function DoctorList({ doctorList }) {
   const router = useRouter();
+  const {token, user} = useAuth();
   console.log({ router });
 
-  const bookHandler = (doc) => {
+  const bookHandler = async(doc) => {
     console.log({doc})
+    if(token === null){
+      alert("Please login first");
+      router.push("/patient/sign-in");
+      return;
+    }
+    const response = await axios.post("/api/patient/book-doctor", {
+      doc,
+      email:user.email,
+    })
+    console.log({response});
+    if(response.data.status === "SUCCESS"){
+      alert("Booking successful");
+      return;
+    }
+    alert("Booking failed");
+    return;
   }
   return (
     <Page>

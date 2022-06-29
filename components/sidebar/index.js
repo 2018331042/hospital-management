@@ -45,6 +45,12 @@ const Items = {
   doctor: {
     buttons: [
       {
+        title: 'Dashboard',
+        id: 'doctor-dashboard',
+        url: '/doctor/dashboard',
+        icon: <PersonPinCircleOutlined />,
+      },
+      {
         title: 'profile',
         id: 'doctor-profile',
         url: '/doctor/profile',

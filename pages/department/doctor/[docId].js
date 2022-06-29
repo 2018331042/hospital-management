@@ -91,12 +91,12 @@ export default function DoctorProfile() {
                   MBBS FCPS MD
                 </Typography>
               </ListItem>
-              {/* <ListItem>
+              <ListItem>
                 <Typography component="h3" variant="h3">
                   Chief Consultant, M.A.G Osmani Medical College hospital,
                   Sylhet
                 </Typography>
-              </ListItem> */}
+              </ListItem>
               {/* <ListItem>
                 <Button>Edit Profile</Button>
               </ListItem> */}
