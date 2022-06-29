@@ -69,7 +69,7 @@ const Items = {
       {
         title: 'assign doctor',
         id: 'assign-doctor',
-        url: '/admin/assigndoctor',
+        url: '/admin/assign-doctor',
       },
       {
         title: 'Create Department',

@@ -1,5 +1,5 @@
-import { useRouter } from 'next/router';
-import Page from '../../components/page';
+import { useRouter } from "next/router";
+import Page from "../../components/page";
 import {
   Card,
   CardActionArea,
@@ -12,87 +12,27 @@ import {
   Box,
   List,
   ListItem,
-} from '@mui/material';
-import NextLink from 'next/link';
+  Button,
+} from "@mui/material";
+import NextLink from "next/link";
+import db from "../../utils/db";
+import { GET_DEPT_DOCTORS } from "../../utils/queries/sql-query";
 
-const doctorList = [
-  {
-    docId: 101,
-    DoctorName: 'Arif',
-    DoctorSpeciality: 'Cardiologist',
-    DoctorImage:
-      'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
-  },
-  {
-    docId: 102,
-    DoctorName: 'Barif',
-    DoctorSpeciality: 'Cardiologist',
-    DoctorImage:
-      'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
-  },
-
-  {
-    docId: 103,
-    DoctorName: 'Carif',
-    DoctorSpeciality: 'Cardiologist',
-    DoctorImage:
-      'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
-  },
-  {
-    docId: 109,
-    DoctorName: 'Darif',
-    DoctorSpeciality: 'Cardiologist',
-    DoctorImage:
-      'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
-  },
-  {
-    docId: 104,
-    DoctorName: 'Earif',
-    DoctorSpeciality: 'Cardiologist',
-    DoctorImage:
-      'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
-  },
-  {
-    docId: 105,
-    DoctorName: 'Farif',
-    DoctorSpeciality: 'Cardiologist',
-    DoctorImage:
-      'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
-  },
-  {
-    docId: 106,
-    DoctorName: 'Garif',
-    DoctorSpeciality: 'Cardiologist',
-    DoctorImage:
-      'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
-  },
-  {
-    docId: 107,
-    DoctorName: 'Harif',
-    DoctorSpeciality: 'Cardiologist',
-    DoctorImage:
-      'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
-  },
-  {
-    docId: 108,
-    DoctorName: 'Iarif',
-    DoctorSpeciality: 'Cardiologist',
-    DoctorImage:
-      'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000',
-  },
-];
-
-export default function DoctorList() {
+export default function DoctorList({ doctorList }) {
   const router = useRouter();
   console.log({ router });
+
+  const bookHandler = (doc) => {
+    console.log({doc})
+  }
   return (
     <Page>
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          color: 'gray',
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          color: "gray",
         }}
       >
         <h1>Doctors of no: {router.query.deptCode} department</h1>
@@ -100,78 +40,96 @@ export default function DoctorList() {
       <Box sx={{ margin: 5 }}>
         <Grid container spacing={4}>
           {doctorList.map((doc) => (
-            <Grid item md={3} xs={12} key={doc.DocId}>
+            <Grid item md={3} xs={12} key={doc.id}>
               <Card
                 sx={{
-                  ':hover': {
+                  ":hover": {
                     boxShadow: 20,
-                    border: '2px solid orange', // theme.shadows[20]
-                    transitionDuration: '500ms',
+                    border: "2px solid orange", // theme.shadows[20]
+                    transitionDuration: "500ms",
                   },
                 }}
               >
-                <NextLink href={`/department/doctor/${doc.docId}`} passHref>
-                  <CardActionArea style={{ justifyContent: 'center' }}>
-                    <Grid container direction="column" spacing={1}>
-                      <Grid item container md={3} xs={6}>
-                        <Grid item xs>
-                          <Container
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              flexDirection: 'column',
+                <Grid container direction="column" spacing={1}>
+                  <Grid item container md={3} xs={6}>
+                    <Grid item xs>
+                      <Container
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <Avatar
+                          alt={doc.DoctorName}
+                          src={doc.DoctorImage}
+                          sx={{
+                            width: 220,
+                            height: 220,
+                            margin: 10,
+                            display: "flex",
+                          }}
+                        />
+                      </Container>
+                    </Grid>
+                  </Grid>
+                  <Grid item container direction="column" md={8} xs={6}>
+                    <Grid item xs alignItems="center" justifyContent="center">
+                      <CardContent>
+                        <List>
+                          <ListItem
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              color: "Orange",
                             }}
                           >
-                            <Avatar
-                              alt={doc.DoctorName}
-                              src={doc.DoctorImage}
-                              sx={{
-                                width: 220,
-                                height: 220,
-                                margin: 10,
-                                display: 'flex',
-                              }}
-                            />
-                          </Container>
-                        </Grid>
-                      </Grid>
-                      <Grid item container direction="column" md={8} xs={6}>
-                        <Grid
-                          item
-                          xs
-                          alignItems="center"
-                          justifyContent="center"
+                            <Typography component="h2" variant="h4">
+                              {doc.name}
+                            </Typography>
+                          </ListItem>
+                          <ListItem
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <Typography component="h4" variant="h6">
+                              {doc.qualification}
+                            </Typography>
+                          </ListItem>
+                          <ListItem
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <Typography component="h4" variant="h6">
+                              seating time: {doc.start_time} - {doc.end_time}
+                            </Typography>
+                          </ListItem>
+                          <ListItem
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <Typography component="h4" variant="h6">
+                              patient seat: {doc.patient_seat}
+                            </Typography>
+                          </ListItem>
+                        </List>
+                        <Button
+                          variant="contained"
+                          onClick={(e) => bookHandler(doc)}
                         >
-                          <CardContent>
-                            <List>
-                              <ListItem
-                                style={{
-                                  display: 'flex',
-                                  justifyContent: 'center',
-                                  color: 'Orange',
-                                }}
-                              >
-                                <Typography component="h2" variant="h4">
-                                  {doc.DoctorName}
-                                </Typography>
-                              </ListItem>
-                              <ListItem
-                                style={{
-                                  display: 'flex',
-                                  justifyContent: 'center',
-                                }}
-                              >
-                                <Typography component="h4" variant="h6">
-                                  {doc.DoctorSpeciality}
-                                </Typography>
-                              </ListItem>
-                            </List>
-                          </CardContent>
-                        </Grid>
-                      </Grid>
+                          Book Now
+                        </Button>
+                      </CardContent>
+          
                     </Grid>
-                  </CardActionArea>
-                </NextLink>
+                  </Grid>
+                </Grid>
               </Card>
             </Grid>
           ))}
@@ -179,4 +137,19 @@ export default function DoctorList() {
       </Box>
     </Page>
   );
+}
+
+export async function getServerSideProps(context) {
+  console.log({ context });
+  const dept_code = context.query.deptCode;
+
+  const res = await db.query(GET_DEPT_DOCTORS, [dept_code]);
+  console.log({ res });
+  const doctorList = JSON.parse(JSON.stringify(res));
+  console.log({ doctorList });
+  return {
+    props: {
+      doctorList,
+    },
+  };
 }

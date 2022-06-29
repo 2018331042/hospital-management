@@ -91,30 +91,18 @@ export default function DoctorProfile() {
                   MBBS FCPS MD
                 </Typography>
               </ListItem>
-              <ListItem>
+              {/* <ListItem>
                 <Typography component="h3" variant="h3">
                   Chief Consultant, M.A.G Osmani Medical College hospital,
                   Sylhet
                 </Typography>
-              </ListItem>
-              <ListItem>
-                <CallIcon />
-                <Typography component="h3" variant="h3" sx={{ margin: 2 }}>
-                  017420420420
-                </Typography>
-              </ListItem>
-              <ListItem>
-                <EmailIcon />
-                <Typography component="h3" variant="h3" sx={{ margin: 2 }}>
-                  arifshahriar@gmail.com
-                </Typography>
-              </ListItem>
-              <ListItem>
+              </ListItem> */}
+              {/* <ListItem>
                 <Button>Edit Profile</Button>
-              </ListItem>
+              </ListItem> */}
             </List>
           </Grid>
-          <Grid
+          {/* <Grid
             item
             md={4}
             xs={12}
@@ -201,9 +189,10 @@ export default function DoctorProfile() {
                 </Typography>
               </CardContent>
             </Card>
-          </Grid>
+          </Grid> */}
         </Grid>
       </ThemeProvider>
     </Page>
   );
 }
+

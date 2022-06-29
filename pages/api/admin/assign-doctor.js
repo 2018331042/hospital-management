@@ -7,8 +7,19 @@ import {
 import sendEmail from "../../../utils/email";
 
 export default async function handler(req, res) {
-  const { deptCode, email, password } = req.body;
+  const {
+    deptCode,
+    email,
+    password,
+    name,
+    qualification,
+    start_time,
+    end_time,
+    patient_seat,
+  } = req.body;
   const dbPassowrd = bcrypt.hashSync(password.toString());
+  //changes the deptcode to integer as database type
+  const code = parseInt(deptCode);
   try {
     const response = await db.query(DEPT_EXIST, [deptCode]);
     console.log({ response });
@@ -16,7 +27,12 @@ export default async function handler(req, res) {
       const result = await db.query(INSERT_ONE_DOCTOR, [
         email,
         dbPassowrd,
-        deptCode,
+        code,
+        name,
+        qualification,
+        start_time,
+        end_time,
+        patient_seat,
       ]);
       console.log({ result });
       if (result.affectedRows > 0) {

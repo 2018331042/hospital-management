@@ -1,6 +1,7 @@
 export const INSERT_ONE_DEPARTMENT = `INSERT INTO DEPARTMENT (name, code) VALUES (?, ?)`;
 
-export const INSERT_ONE_DOCTOR = `INSERT INTO DOCTOR (email, password, dept_code) VALUES (?, ?, ?)`;
+export const INSERT_ONE_DOCTOR = `INSERT INTO DOCTOR 
+(email, password, dept_code,name,qualification,start_time,end_time,patient_seat) VALUES (?,?,?,?,?,?,?,?)`;
 
 export const INSERT_PATIENT_ONE = `INSERT INTO PATIENT (email, password, name, age, gender) VALUES (?,?,?,?,?)`;
 
@@ -14,15 +15,25 @@ export const DEPT_EXIST = `SELECT * FROM DEPARTMENT WHERE code = ?`;
 
 export const GET_DEPT_INFO = `SELECT * FROM DEPARTMENT`;
 
+export const GET_DEPT_DOCTORS = `SELECT * FROM DOCTOR WHERE dept_code = ?`;
+
+export const GET_DEPT_CODE_AND_NAME = `SELECT code, name FROM DEPARTMENT`;
+
 export const CREATE_DOCTOR_TABLE = `CREATE TABLE DOCTOR(
-   id INTEGER PRIMARY KEY,
-   email VARCHAR(30) NOT NULL,
-   password VARCHAR(30) NOT NULL,
-   age INTEGER,
-   name VARCHAR(30),
-   dept_code INTEGER,
-   FOREIGN KEY(dept_code) REFERENCES DEPARTMENT(code)
-)`;
+	id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(50) NOT NULL,
+    password VARCHAR(75) NOT NULL,
+    name VARCHAR(30),
+    qualification VARCHAR(75),
+    start_time TIME,
+    end_time TIME,
+    patient_seat INTEGER,
+    available_patient_seat INTEGER,
+    dept_code INTEGER,
+    FOREIGN KEY(dept_code) REFERENCES DEPARTMENT(code)
+);
+
+ALTER TABLE DOCTOR AUTO_INCREMENT=100;`;
 
 export const CREATE_PATIENT_TABLE = `CREATE TABLE PATIENT(
    email VARCHAR(30) PRIMARY KEY,
@@ -31,3 +42,12 @@ export const CREATE_PATIENT_TABLE = `CREATE TABLE PATIENT(
    age INTEGER,
    gender VARCHAR(20)
 )`;
+
+export const CREATE_BOOKED_DOCTORS_TABLE = `CREATE TABLE BOOKED_DOCTORS(
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    patient_email VARCHAR(75),
+    doc_id INTEGER,
+    
+    FOREIGN KEY(patient_email) REFERENCES PATIENT(email),
+    FOREIGN KEY(doc_id) REFERENCES DOCTOR(id)
+)`
