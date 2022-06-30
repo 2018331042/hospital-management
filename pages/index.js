@@ -53,7 +53,6 @@ const departments = [
 ];
 
 export default function Home({ departments }) {
-  const { isLoggedIn, isLoading, token, user } = useAuth();
   return (
     <Page>
       <div

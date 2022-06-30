@@ -1,4 +1,4 @@
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
   Button,
@@ -8,13 +8,13 @@ import {
   Link,
   Toolbar,
   Typography,
-} from '@mui/material';
-import { Box, padding } from '@mui/system';
-import Head from 'next/head';
-import React, { useCallback } from 'react';
-import { useAuth } from '../utils/contexts/auth';
-import { useSidebar } from '../utils/contexts/sidebarContext';
-import useTilg from 'tilg';
+} from "@mui/material";
+import { Box, padding } from "@mui/system";
+import Head from "next/head";
+import React, { useCallback } from "react";
+import { useAuth } from "../utils/contexts/auth";
+import { useSidebar } from "../utils/contexts/sidebarContext";
+import useTilg from "tilg";
 export default function Page({ children, title }) {
   const { setMode, setOpen } = useSidebar();
   const { isLoading, isLoggedIn, user } = useAuth();
@@ -22,17 +22,17 @@ export default function Page({ children, title }) {
   const makeSidebar = useCallback(() => {
     console.log({ user });
     if (isLoading || !isLoggedIn) {
-      setMode('unauthenticated');
+      setMode("unauthenticated");
       return;
     }
-    if (user.type === 'patient') {
-      setMode('patient');
+    if (user.type === "patient") {
+      setMode("patient");
     }
-    if (user.type === 'doctor') {
-      setMode('doctor');
+    if (user.type === "doctor") {
+      setMode("doctor");
     }
-    if (user.type === 'admin') {
-      setMode('admin');
+    if (user.type === "admin") {
+      setMode("admin");
     }
   }, [isLoading, isLoggedIn, user, setMode]);
 
@@ -44,7 +44,7 @@ export default function Page({ children, title }) {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        style={{ minHeight: '100vh' }}
+        style={{ minHeight: "100vh" }}
       >
         <CircularProgress />
       </Grid>
@@ -56,24 +56,24 @@ export default function Page({ children, title }) {
       <Head>{title}</Head>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar
-          position="static"
+          position="fixed"
           color="inherit"
-          sx={{ boxShadow: 'none', minHeight: '10vh' }}
+          sx={{ boxShadow: "none", minHeight: "10vh" }}
         >
           <Toolbar
             variant="regular"
             style={{
-              justifyContent: 'space-between',
-              overflow: 'hidden',
+              justifyContent: "space-between",
+              overflow: "hidden",
             }}
           >
             <Typography variant="h6" color="secondary" noWrap>
               <Box
                 sx={{
-                  fontWeight: 'bold',
-                  color: '#1F5A1F',
-                  textDecoration: 'none',
-                  justifyItems: 'center',
+                  fontWeight: "bold",
+                  color: "#1F5A1F",
+                  textDecoration: "none",
+                  justifyItems: "center",
                 }}
               >
                 <Button
@@ -82,7 +82,7 @@ export default function Page({ children, title }) {
                 >
                   <MenuIcon />
                 </Button>
-                <Link href="/" sx={{ textDecoration: 'none' }}>
+                <Link href="/" sx={{ textDecoration: "none" }}>
                   Hospital Management
                 </Link>
               </Box>
@@ -91,8 +91,34 @@ export default function Page({ children, title }) {
           </Toolbar>
         </AppBar>
       </Box>
-      <div style={{ minHeight: '100vh', justifyContent: 'center' }}>
-        <Container maxWidth="xl">{children}</Container>
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-around",
+        }}
+      >
+        <div>
+          <Container maxWidth="xl">{children}</Container>
+        </div>
+        <div>
+          <footer
+            style={{
+              position: "sticky",
+              left: 0,
+              bottom: 0,
+              width: "100%",
+              height: "100%",
+              textAlign: "center",
+              fontWeight: "bold",
+              fontFamily: `"Lucida Console", "Courier New", monospace`,
+              marginTop:"5rem"
+            }}
+          >
+            @ Powered By NextJs And Mysql
+          </footer>
+        </div>
       </div>
     </div>
   );

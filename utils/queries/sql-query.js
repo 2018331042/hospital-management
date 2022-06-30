@@ -17,6 +17,8 @@ export const GET_DEPT_INFO = `SELECT * FROM DEPARTMENT`;
 
 export const GET_DEPT_DOCTORS = `SELECT * FROM DOCTOR WHERE dept_code = ?`;
 
+export const GET_DEPT_NAME = `SELECT name FROM DEPARTMENT WHERE code = ?`;
+
 export const GET_DEPT_CODE_AND_NAME = `SELECT code, name FROM DEPARTMENT`;
 
 export const INSERT_BOOKED_DOCTORS = `INSERT INTO BOOKED_DOCTORS (patient_email, doc_id) VALUES (?, ?)`;
