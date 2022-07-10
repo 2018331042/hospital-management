@@ -7,50 +7,10 @@ import {
   Typography,
 } from '@mui/material';
 import Page from '../components/page';
-import { useAuth } from '../utils/contexts/auth';
 import NextLink from 'next/link';
 import axios from 'axios';
 import db from '../utils/db';
 import { GET_DEPT_INFO } from '../utils/queries/sql-query';
-
-const departments = [
-  {
-    deptName: 'Cardiology',
-    numberOfDoctors: '10',
-    deptCode: 1,
-    image: '/images/cardiology.jpg',
-  },
-  {
-    deptName: 'Dermatology',
-    numberOfDoctors: '10',
-    deptCode: 2,
-    image: '/images/cardiology.jpg',
-  },
-  {
-    deptName: 'Gastroenterology',
-    numberOfDoctors: '10',
-    deptCode: 3,
-    image: '/images/cardiology.jpg',
-  },
-  {
-    deptName: 'General Surgery',
-    numberOfDoctors: '10',
-    deptCode: 4,
-    image: '/images/cardiology.jpg',
-  },
-  {
-    deptName: 'Neurology',
-    numberOfDoctors: '10',
-    deptCode: 5,
-    image: '/images/cardiology.jpg',
-  },
-  {
-    deptName: 'Nephrology',
-    numberOfDoctors: '10',
-    deptCode: 6,
-    image: '/images/cardiology.jpg',
-  },
-];
 
 export default function Home({ departments }) {
   return (
@@ -104,7 +64,7 @@ export default function Home({ departments }) {
 }
 
 
-export async function getStaticProps(ctx){
+export async function getServerSideProps(ctx){
   const res = await db.query(GET_DEPT_INFO);
   const departments = JSON.parse(JSON.stringify(res));
   console.log({ departments });

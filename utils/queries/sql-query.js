@@ -25,7 +25,7 @@ export const INSERT_BOOKED_DOCTORS = `INSERT INTO BOOKED_DOCTORS (patient_email,
 
 export const UPDATE_DEPT_TOTAL_DOCTOR = `UPDATE DEPARTMENT SET total_doctor = ? WHERE code = ?`;
 
-export const FIND_DOCTOR_BY_ID = `SELECT P.email, P.name, P.gender FROM BOOKED_DOCTORS AS BD 
+export const FIND_DOCTOR_BY_ID = `SELECT BD.id, P.email, P.name, P.gender FROM BOOKED_DOCTORS AS BD 
 INNER JOIN PATIENT AS P ON
 BD.patient_email = P.email WHERE BD.doc_id = ?`;
 

@@ -1,19 +1,9 @@
 import { Button, Collapse, Table } from "@mantine/core";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import Page from "../../components/page";
 import { useAuth } from "../../utils/contexts/auth";
-
-const elements = [{ position: null, mass: null, symbol: "", name: "" }];
-
-const rows = elements.map((element) => (
-  <tr key={element.name}>
-    <td>{element.position}</td>
-    <td>{element.name}</td>
-    <td>{element.symbol}</td>
-    <td>{element.mass}</td>
-  </tr>
-));
 
 export default function DoctorDashBoard() {
   const [opened, setOpen] = useState(false);
@@ -25,7 +15,13 @@ export default function DoctorDashBoard() {
     },
   ]);
   const { user } = useAuth();
+  const router = useRouter()
   const handleOpen = async () => {
+
+    if(opened){
+      setOpen((o) => !o);
+      return;
+    }
     const response = await axios.post("/api/doctor/patient-list", {
       doctor_id: user.id,
     });
@@ -43,7 +39,7 @@ export default function DoctorDashBoard() {
   };
   return (
     <Page>
-      <Button onClick={() => handleOpen()}>Today's Patient List</Button>
+      <Button onClick={() => handleOpen()}>Today&apos;s Patient List</Button>
 
       <Collapse
         in={opened}
@@ -56,6 +52,7 @@ export default function DoctorDashBoard() {
               <th>Email</th>
               <th>Name</th>
               <th>Gender</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -64,6 +61,7 @@ export default function DoctorDashBoard() {
                 <td>{info.email}</td>
                 <td>{info.name}</td>
                 <td>{info.gender}</td>
+                <td><Button onClick={() => router.push(`/doctor/prescription/${info.id}`)}>check</Button></td>
               </tr>
             ))}
           </tbody>
@@ -72,11 +70,3 @@ export default function DoctorDashBoard() {
     </Page>
   );
 }
-
-// {patientInfo.map((info) => (
-//     <tr key={info.email}>
-//       <td>{info.email}</td>
-//       <td>{info.name}</td>
-//       <td>{info.gender}</td>
-//     </tr>
-//   ))}

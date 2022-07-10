@@ -1191,6 +1191,11 @@ domutils@^2.5.2:
     domelementtype "^2.2.0"
     domhandler "^4.2.0"
 
+draftjs-to-html@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/draftjs-to-html/-/draftjs-to-html-0.9.1.tgz#1c870fbb588d2390204cb4d0ee7e04ad0c709969"
+  integrity sha512-fFstE6+IayaVFBEvaFt/wN8vdj8FsTRzij7dy7LI9QIwf5LgfHFi9zSpvCg+feJ2tbYVqHxUkjcibwpsTpgFVQ==
+
 duplexer2@^0.1.2:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/duplexer2/-/duplexer2-0.1.4.tgz#8b12dab878c0d69e3e7891051662a32fc6bddcc1"
@@ -3026,6 +3031,11 @@ use-subscription@1.5.1:
   dependencies:
     object-assign "^4.1.1"
 
+use-sync-external-store@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/use-sync-external-store/-/use-sync-external-store-1.1.0.tgz#3343c3fe7f7e404db70f8c687adf5c1652d34e82"
+  integrity sha512-SEnieB2FPKEVne66NpXPd1Np4R1lTNKfjuy3XdIoPQKYBAFdzbzSZlSn1KJZUiihQLQC5Znot4SBz1EOTBwQAQ==
+
 util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz"
@@ -3124,3 +3134,10 @@ yup@^0.32.11:
     nanoclone "^0.2.1"
     property-expr "^2.0.4"
     toposort "^2.0.2"
+
+zustand@^4.0.0-rc.1:
+  version "4.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/zustand/-/zustand-4.0.0-rc.1.tgz#ec30a3afc03728adec7e1bd7bcc3592176372201"
+  integrity sha512-qgcs7zLqBdHu0PuT3GW4WCIY5SgXdsv30GQMu9Qpp1BA2aS+sNS8l4x0hWuyEhjXkN+701aGWawhKDv6oWJAcw==
+  dependencies:
+    use-sync-external-store "1.1.0"

@@ -26,6 +26,7 @@
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "dayjs": "^1.11.3",
+    "draftjs-to-html": "^0.9.1",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "next": "12.1.0",
@@ -35,7 +36,8 @@
     "tabler-icons-react": "^1.51.0",
     "tilg": "^0.1.1",
     "util": "^0.12.4",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {
     "eslint": "8.11.0",
