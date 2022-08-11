@@ -2,6 +2,8 @@ import db from "../../../utils/db";
 import bcrypt from "bcryptjs";
 import {
   DEPT_EXIST,
+  FIND_DOCTOR,
+  INSERT_DOCTOR_ANALYTICS,
   INSERT_ONE_DOCTOR,
   UPDATE_DEPT_TOTAL_DOCTOR,
 } from "../../../utils/queries/sql-query";
@@ -18,6 +20,7 @@ export default async function handler(req, res) {
     end_time,
     patient_seat,
   } = req.body;
+  console.log({password});
   const dbPassowrd = bcrypt.hashSync(password.toString());
   //changes the deptcode to integer as database type
   const code = parseInt(deptCode);
@@ -41,6 +44,11 @@ export default async function handler(req, res) {
         const total_doctor = response[0].total_doctor + 1;
         const update_dept = await db.query(UPDATE_DEPT_TOTAL_DOCTOR,[total_doctor,deptCode]);
         console.log({ update_dept });
+        /**GET THE DOCTOR ID USING THE UNIQUE EMAIL */
+        const get_doc_id = await db.query(FIND_DOCTOR, [email]);
+        console.log({id: get_doc_id[0]});
+        const insert_doctor_analytics = await db.query(INSERT_DOCTOR_ANALYTICS, [get_doc_id[0].id]);
+        console.log({insert_doctor_analytics});
         await sendEmail(
           email,
           "Welcome to Hospital Management System",

@@ -8,6 +8,7 @@ import {
   Image,
   Table,
   Text,
+  Title,
 } from "@mantine/core";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -19,19 +20,10 @@ export default function DoctorDashBoard() {
   const [curOpened, setCurOpen] = useState(false);
   const [prevOpened, setPrevOpen] = useState(false);
   const [curPatientInfo, setCurPatientInfo] = useState([
-    {
-      email: "",
-      name: "",
-      gender: null,
-    },
   ]);
   const [prevPatientInfo, setPrevPatientInfo] = useState([
-    {
-      email: "",
-      name: "",
-      gender: null,
-    },
   ]);
+  const [analytics, setAnalytics] = useState();
 
   const { user } = useAuth();
   const router = useRouter();
@@ -44,12 +36,14 @@ export default function DoctorDashBoard() {
       });
       console.log({ response });
       const {
-        data: { patientInfo },
+        data: { patientInfo, earningsAndAnalytics },
         status,
         message,
       } = response.data;
       console.log({ patientInfo });
+      console.log({anlytics: earningsAndAnalytics[0]});
       if (status === "SUCCESS") {
+        setAnalytics(earningsAndAnalytics[0]);
         let currentPatient = [];
         let prevPatient = [];
         patientInfo.map((info) => {
@@ -63,11 +57,13 @@ export default function DoctorDashBoard() {
         });
         setCurPatientInfo(currentPatient);
         setPrevPatientInfo(prevPatient);
+        
       }
     };
     await getDashBoardData();
-    console.log({ curPatientInfo });
-    console.log({ prevPatientInfo });
+    // console.log({ curPatientInfo });
+    // console.log({ prevPatientInfo });
+    // console.log({analytics})
   }, [user.email]);
   return (
     <Page>
@@ -152,15 +148,27 @@ export default function DoctorDashBoard() {
           </Table>
         </Collapse>
       </div>
+    
       <div style={{ marginTop: ".5rem" }}>
+        {console.log({analytics})}
+        <Title>DOCTOR EARNINGS AND ANALYTICS</Title>
         <Card shadow="sm" p="lg" radius="md" withBorder>
           <Grid style={{textAlign:"center"}}>
-            <Grid.Col span={2}>
+            <Grid.Col span={3}>
               <div >Total earning</div>
-              <div>5</div>
+              <div>{analytics?.net_income}</div>
             </Grid.Col>
-            <Grid.Col span={2}>
+            <Grid.Col span={3}>
               <div>Total Patient</div>
+              <div>{analytics?.total_patient}</div>
+            </Grid.Col>
+            <Grid.Col span={3}>
+              <div>withdrawn</div>
+              <div>{analytics?.withdrawn}</div>
+            </Grid.Col>
+            <Grid.Col span={3}>
+              <div>Available For widrawal</div>
+              <div>{analytics?.current_balance}</div>
             </Grid.Col>
           </Grid>
         </Card>
