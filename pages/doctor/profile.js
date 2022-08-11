@@ -6,17 +6,20 @@ import {
   ListItem,
   Typography,
   ListItemIcon,
-  Button,
   Card,
   CardContent,
+  Input,
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CallIcon from '@mui/icons-material/Call';
 import EmailIcon from '@mui/icons-material/Email';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { useRouter } from 'next/router';
-import React from 'react';
-import Page from '../../../components/page';
+import React, { useState, useEffect } from 'react';
+import Page from '../../components/page';
 import { fontWeight } from '@mui/system';
+import AddAPhoto from '@mui/icons-material/AddAPhoto';
+import { Modal, Group, TextInput, Button } from '@mantine/core';
 
 export default function DoctorProfile() {
   const theme = createTheme({
@@ -43,7 +46,18 @@ export default function DoctorProfile() {
     },
   });
 
+  const [images, setImages] = useState([]);
+  const [imageURLs, setImageURLs] = useState([]);
+  const [opened, setOpened] = useState(false);
+
+  function onImageChange(e) {
+    setImages([...e.target.files]);
+  }
+
   const router = useRouter();
+  const selectImage = () => {
+    console.log('select image');
+  };
   return (
     <Page>
       <ThemeProvider theme={theme}>
@@ -58,24 +72,22 @@ export default function DoctorProfile() {
             >
               <Avatar
                 alt="Arif"
-                src={
-                  'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000'
-                }
+                src={images}
                 layout="responsive"
                 sx={{
                   width: 300,
                   height: 300,
-                  margin: 10,
+                  marginTop: 10,
+                  marginBottom: 3,
                   display: 'flex',
-                  transition: '.5s ease',
-                  ':hover': {
-                    boxShadow: 20,
-                    border: '2px solid blue', // theme.shadows[20]
-                    width: 370,
-                    height: 370,
-                    transitionDuration: '500ms',
-                  },
                 }}
+              />
+              {/* <AddAPhoto onClick={onImageChange} /> */}
+              <input
+                type="file"
+                multiple
+                accept="image/*"
+                onChange={onImageChange}
               />
             </Container>
           </Grid>
@@ -109,6 +121,47 @@ export default function DoctorProfile() {
                   arifshahriar@gmail.com
                 </Typography>
               </ListItem>
+              <ListItem>
+                <Modal
+                  opened={opened}
+                  onClose={() => setOpened(false)}
+                  title="Edit profile"
+                  centered
+                >
+                  <TextInput
+                    placeholder="Your name"
+                    label="Full name"
+                    required
+                  />
+                  <br />
+                  <TextInput
+                    placeholder="Your degree"
+                    label="Degree"
+                    required
+                  />
+
+                  <br />
+
+                  <TextInput
+                    placeholder="your current post"
+                    label="Current Post"
+                    required
+                  />
+                  <br />
+                  <TextInput
+                    placeholder="Your mobile"
+                    label="Mobile"
+                    required
+                  />
+                  <br />
+                  <TextInput placeholder="Your email" label="Email" required />
+                  <br />
+                  <Button>Save changes</Button>
+                </Modal>
+                <Group position="center">
+                  <Button onClick={() => setOpened(true)}> Edit Profile</Button>
+                </Group>
+              </ListItem>
             </List>
           </Grid>
           {/* <Grid
@@ -120,16 +173,9 @@ export default function DoctorProfile() {
             sx={{ marginTop: 10 }}
           >
             <Card
-              sx={{
+              style={{
                 display: 'flex',
                 justifyContent: 'center',
-                transition: '.5s ease',
-                ':hover': {
-                  boxShadow: 20,
-                  border: '2px solid orange', // theme.shadows[20]
-                  transitionDuration: '500ms',
-                  background: '#bde7ff',
-                },
               }}
             >
               <CardContent>
@@ -147,16 +193,9 @@ export default function DoctorProfile() {
           </Grid>
           <Grid item md={4} xs={12} sx={{ marginTop: 10 }}>
             <Card
-              sx={{
+              style={{
                 display: 'flex',
                 justifyContent: 'center',
-                transition: '.5s ease',
-                ':hover': {
-                  boxShadow: 20,
-                  border: '2px solid orange', // theme.shadows[20]
-                  transitionDuration: '500ms',
-                  background: '#bde7ff',
-                },
               }}
             >
               <CardContent>
@@ -174,16 +213,9 @@ export default function DoctorProfile() {
           </Grid>
           <Grid item md={4} xs={12} sx={{ marginTop: 10 }}>
             <Card
-              sx={{
+              style={{
                 display: 'flex',
                 justifyContent: 'center',
-                transition: '.5s ease',
-                ':hover': {
-                  boxShadow: 20,
-                  border: '2px solid orange', // theme.shadows[20]
-                  transitionDuration: '500ms',
-                  background: '#bde7ff',
-                },
               }}
             >
               <CardContent>
