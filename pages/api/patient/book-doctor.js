@@ -5,7 +5,7 @@ export default async function handler(req, res) {
   const { doc, email } = req.body;
   try {
     const result = await db.query(INSERT_BOOKED_DOCTORS, [email, doc.id, 
-      new Date()]);
+      new Date(), "PENDING"]);
     // const setDoctorAnalytics = db.query(UPDATE_DOCTOR_ANALYTICS, [doc.id]);
 
     return res.json({ status: "SUCCESS", message: "Booked Successfully" });

@@ -50,7 +50,6 @@ const Prescription = ({prescription}) => {
 export default Prescription;
 
 export async function getServerSideProps(ctx){
-    console.log({ctx});
     const prescribedId = ctx.query.id;
     const res = await db.query(GET_PREVIOUS_PRESCRIPTION, [prescribedId]);
     console.log({res});
