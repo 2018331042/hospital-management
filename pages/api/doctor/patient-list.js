@@ -10,7 +10,12 @@ export default async function handler(req, res) {
    
     if (result.length > 0) {
         const patientInfo = JSON.parse(JSON.stringify(result))
-        console.log({patientInfo});
+        // console.log(new Date(patientInfo[1].date).getDate());
+        // if(new Date() < new Date(patientInfo[1].date)){
+        //   console.log("true");
+        // }else{
+        //   console.log("false");
+        // }
         return res.json({data: {patientInfo}, status: "SUCCESS", message: "Patient list found"});
     }
   } catch (err) {
