@@ -52,36 +52,39 @@ export default function DoctorProfile() {
   const [imageURLs, setImageURLs] = useState([]);
   const [opened, setOpened] = useState(false);
   const [info, setInfo] = useState();
-  const [name, setNewName] = useState("");
-  const [degree, setNewDegree] = useState("");
-  const [email, setNewEmail] = useState("");
+  const [name, setNewName] = useState('');
+  const [degree, setNewDegree] = useState('');
+  const [email, setNewEmail] = useState('');
   const { user, isLoading } = useAuth();
 
-  useEffect(async() => {
-    const getDoctorProfileData = async() => {
-      const response = await axios.post("/api/doctor/profile_data", {
+  useEffect(async () => {
+    const getDoctorProfileData = async () => {
+      const response = await axios.post('/api/doctor/profile_data', {
         doc_id: user.id,
-      })
-      const {data:{result}, status} = response.data;
-      console.log({result});
-      if(result.length === 0 ) return null;
+      });
+      const {
+        data: { result },
+        status,
+      } = response.data;
+      console.log({ result });
+      if (result.length === 0) return null;
       setNewName(result[0].name);
       setNewEmail(result[0].email);
       setNewDegree(result[0].qualification);
       setInfo(result[0]);
-    }
+    };
     await getDoctorProfileData();
-  }, [user.email])
+  }, [user.email]);
 
-  const handleChange = async() =>{
-    console.log({name, email, degree});
-    const res = await axios.post("/api/doctor/update_profile", {
+  const handleChange = async () => {
+    console.log({ name, email, degree });
+    const res = await axios.post('/api/doctor/update_profile', {
       name,
       degree,
       email,
-      doc_id:user.id,
-    })
-  }
+      doc_id: user.id,
+    });
+  };
 
   function onImageChange(e) {
     setImages([...e.target.files]);
@@ -106,7 +109,9 @@ export default function DoctorProfile() {
             >
               <Avatar
                 alt="Arif"
-                src={images}
+                src={
+                  'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000'
+                }
                 layout="responsive"
                 sx={{
                   width: 300,
@@ -168,9 +173,14 @@ export default function DoctorProfile() {
                     label="Degree"
                     value={degree}
                     onChange={(e) => setNewDegree(e.currentTarget.value)}
-                  /> 
+                  />
                   <br />
-                  <TextInput value={email} placeholder="Your email" label="Email" onChange={(e) => setNewEmail(e.currentTarget.value)} />
+                  <TextInput
+                    value={email}
+                    placeholder="Your email"
+                    label="Email"
+                    onChange={(e) => setNewEmail(e.currentTarget.value)}
+                  />
                   <br />
                   <Button onClick={handleChange}>Save changes</Button>
                   <br />
