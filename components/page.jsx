@@ -113,7 +113,7 @@ export default function Page({ children, title }) {
               textAlign: "center",
               fontWeight: "bold",
               fontFamily: `"Lucida Console", "Courier New", monospace`,
-              marginTop:"5rem"
+              marginTop:".11rem",
             }}
           >
             @ Powered By NextJs And Mysql

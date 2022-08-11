@@ -65,7 +65,7 @@ export default function DoctorProfile() {
       const {data:{result}, status} = response.data;
       console.log({result});
       if(result.length === 0 ) return null;
-      setNewName(result[0].name);
+    setNewName(result[0].name);
       setNewEmail(result[0].email);
       setNewDegree(result[0].qualification);
       setInfo(result[0]);
@@ -81,6 +81,9 @@ export default function DoctorProfile() {
       email,
       doc_id:user.id,
     })
+    if(res.data.status === "success"){
+      window.location.assign("http://localhost:3000/doctor/profile");
+    }
   }
 
   function onImageChange(e) {

@@ -21,6 +21,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import LoginIcon from '@mui/icons-material/Login';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import HistoryIcon from '@mui/icons-material/History';
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -38,6 +39,12 @@ const Items = {
         id: 'patient-profile',
         url: '/patient/profile',
         icon: <AccountCircleIcon />,
+      },
+      {
+        title: 'history',
+        id: 'patient-profile',
+        url: '/patient/history',
+        icon: <HistoryIcon />,
       },
       {
         title: 'Logout',

@@ -19,10 +19,8 @@ import { useAuth } from "../../utils/contexts/auth";
 export default function DoctorDashBoard() {
   const [curOpened, setCurOpen] = useState(false);
   const [prevOpened, setPrevOpen] = useState(false);
-  const [curPatientInfo, setCurPatientInfo] = useState([
-  ]);
-  const [prevPatientInfo, setPrevPatientInfo] = useState([
-  ]);
+  const [curPatientInfo, setCurPatientInfo] = useState([]);
+  const [prevPatientInfo, setPrevPatientInfo] = useState([]);
   const [analytics, setAnalytics] = useState();
 
   const { user } = useAuth();
@@ -41,14 +39,19 @@ export default function DoctorDashBoard() {
         message,
       } = response.data;
       console.log({ patientInfo });
-      console.log({anlytics: earningsAndAnalytics[0]});
+      // console.log({anlytics: earningsAndAnalytics[0]});
       if (status === "SUCCESS") {
         setAnalytics(earningsAndAnalytics[0]);
         let currentPatient = [];
         let prevPatient = [];
         patientInfo.map((info) => {
-          console.log({check: new Date().toDateString() === new Date(info.date).toDateString()})
-          if (new Date().toDateString() === new Date(info.date).toDateString()) {
+          console.log({
+            check:
+              new Date().toDateString() === new Date(info.date).toDateString(),
+          });
+          if (
+            new Date().toDateString() === new Date(info.date).toDateString()
+          ) {
             currentPatient.push(info);
             console.log({ currentPatient });
           } else {
@@ -58,7 +61,6 @@ export default function DoctorDashBoard() {
         });
         setCurPatientInfo(currentPatient);
         setPrevPatientInfo(prevPatient);
-        
       }
     };
     await getDashBoardData();
@@ -91,13 +93,25 @@ export default function DoctorDashBoard() {
                 <td>{info.gender}</td>
                 {/* <td>{info.date}</td> */}
                 <td>
-                  <Button
-                    onClick={() =>
-                      router.push(`/doctor/prescription/${info.id}`)
-                    }
-                  >
-                    check
-                  </Button>
+                  {info.current_status === "PENDING" ? (
+                    <Button
+                      color="red"
+                      onClick={() =>
+                        router.push(`/doctor/prescription/${info.id}`)
+                      }
+                    >
+                      {info.current_status}
+                    </Button>
+                  ) : (
+                    <Button
+                      color="green"
+                      onClick={() =>
+                        router.push(`/doctor/prescription/${info.id}`)
+                      }
+                    >
+                      {info.current_status}
+                    </Button>
+                  )}
                 </td>
               </tr>
             ))}
@@ -146,14 +160,14 @@ export default function DoctorDashBoard() {
           </Table>
         </Collapse>
       </div>
-    
+
       <div style={{ marginTop: ".5rem" }}>
-        {console.log({analytics})}
-        <Title>DOCTOR EARNINGS AND ANALYTICS</Title>
+        {console.log({ analytics })}
+        <Title>EARNINGS AND ANALYTICS</Title>
         <Card shadow="sm" p="lg" radius="md" withBorder>
-          <Grid style={{textAlign:"center"}}>
+          <Grid style={{ textAlign: "center" }}>
             <Grid.Col span={3}>
-              <div >Total earning</div>
+              <div>Total earning</div>
               <div>{analytics?.net_income}</div>
             </Grid.Col>
             <Grid.Col span={3}>

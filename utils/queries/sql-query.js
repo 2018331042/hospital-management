@@ -21,7 +21,7 @@ export const GET_DEPT_NAME = `SELECT name FROM DEPARTMENT WHERE code = ?`;
 
 export const GET_DEPT_CODE_AND_NAME = `SELECT code, name FROM DEPARTMENT`;
 
-export const INSERT_BOOKED_DOCTORS = `INSERT INTO BOOKED_DOCTORS (patient_email, doc_id, date) VALUES (?, ?, ?)`;
+export const INSERT_BOOKED_DOCTORS = `INSERT INTO BOOKED_DOCTORS (patient_email, doc_id, date, current_status) VALUES (?, ?, ?, ?)`;
 
 export const UPDATE_DEPT_TOTAL_DOCTOR = `UPDATE DEPARTMENT SET total_doctor = ? WHERE code = ?`;
 
@@ -29,9 +29,13 @@ export const INSERT_PRESCRIPTION_AND_STATUS = `UPDATE BOOKED_DOCTORS SET prescri
 
 export const GET_PREVIOUS_PRESCRIPTION = `SELECT prescription FROM BOOKED_DOCTORS WHERE id = ?`;
 
-export const FIND_DOCTOR_BY_ID = `SELECT BD.date, BD.id, P.email, P.name, P.gender FROM BOOKED_DOCTORS AS BD 
+export const FIND_DOCTOR_BY_ID = `SELECT BD.current_status, BD.date, BD.id, P.email, P.name, P.gender FROM BOOKED_DOCTORS AS BD 
 INNER JOIN PATIENT AS P ON
 BD.patient_email = P.email WHERE BD.doc_id = ?`;
+
+export const GET_PATEINT_HISTORY = `SELECT BD.current_status, BD.date, BD.id, D.name, D.visit_fee FROM BOOKED_DOCTORS AS BD 
+INNER JOIN DOCTOR AS D ON
+BD.doc_id = D.id WHERE BD.patient_email = ?`
 
 export const GET_DOCTOR_INFO = `SELECT name,qualification,email FROM DOCTOR WHERE id = ?`
 
