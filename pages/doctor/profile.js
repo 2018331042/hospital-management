@@ -139,9 +139,7 @@ export default function DoctorProfile() {
                     label="Degree"
                     required
                   />
-
                   <br />
-
                   <TextInput
                     placeholder="your current post"
                     label="Current Post"
@@ -157,6 +155,7 @@ export default function DoctorProfile() {
                   <TextInput placeholder="Your email" label="Email" required />
                   <br />
                   <Button>Save changes</Button>
+                  <br />
                 </Modal>
                 <Group position="center">
                   <Button onClick={() => setOpened(true)}> Edit Profile</Button>
