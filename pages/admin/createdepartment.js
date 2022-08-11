@@ -3,7 +3,7 @@ import { useForm } from "@mantine/form";
 import { showNotification } from "@mantine/notifications";
 import axios from "axios";
 import { useState } from "react";
-import { Check } from "tabler-icons-react";
+import { Check, X } from "tabler-icons-react";
 import Page from "../../components/page";
 function CreateDept() {
   const [loading, setLoading] = useState(false);

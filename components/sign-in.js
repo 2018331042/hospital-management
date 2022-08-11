@@ -137,7 +137,7 @@ function SignIn({ type }) {
           {type === "patient" && (
             <div style={{ marginTop: "5px" }}>
               <Title order={6} sx={{ textAlign: "center" }}>
-                Don't have an account?{" "}
+                Don`&apos`t have an account?{" "}
                 <Link href="/patient/sign-up">
                   <a style={{ color: "blue" }}>Sign Up</a>
                 </Link>

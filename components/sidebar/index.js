@@ -16,13 +16,18 @@ import { styled } from '@mui/material/styles';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../utils/contexts/auth';
 import { useSidebar } from '../../utils/contexts/sidebarContext';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import LoginIcon from '@mui/icons-material/Login';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
+  justifyContent: 'space-around',
 }));
 
 const Items = {
@@ -32,56 +37,63 @@ const Items = {
         title: 'profile',
         id: 'patient-profile',
         url: '/patient/profile',
-        icon: <PersonPinCircleOutlined />,
+        icon: <AccountCircleIcon />,
       },
       {
         title: 'Logout',
         id: 'logout',
         url: '/logout',
-        icon: <PersonPinCircleOutlined />,
+        icon: <ExitToAppIcon />,
       },
     ],
   },
   doctor: {
     buttons: [
       {
+        title: 'Dashboard',
+        id: 'doctor-dashboard',
+        url: '/doctor/dashboard',
+        icon: <DashboardIcon />,
+      },
+      {
         title: 'profile',
         id: 'doctor-profile',
         url: '/doctor/profile',
-        icon: <PersonPinCircleOutlined />,
+        icon: <AccountCircleIcon color='primary'/>,
       },
       {
         title: 'Logout',
         id: 'logout',
         url: '/logout',
-        icon: <PersonPinCircleOutlined />,
+        icon: <ExitToAppIcon color='secondary' sx={{fontSize: 30}}/>,
       },
     ],
   },
   admin: {
     buttons: [
       {
-        title: 'profile',
-        id: 'admin-profile',
-        url: '/admin/profile',
-        icon: <PersonPinCircleOutlined />,
+        title: 'Dashboard',
+        id: 'admin-dashboard',
+        url: '/admin/dashboard',
+        icon: <DashboardIcon />,
       },
       {
-        title: 'assign doctor',
+        title: 'Assign Doctor',
         id: 'assign-doctor',
-        url: '/admin/assigndoctor',
+        url: '/admin/assign-doctor',
+        icon: <AddCircleOutlineIcon />
       },
       {
         title: 'Create Department',
         id: 'create-department',
         url: '/admin/createdepartment',
-        icon: <PersonPinCircleOutlined />,
+        icon: <AddCircleOutlineIcon />,
       },
       {
         title: 'Logout',
         id: 'logout',
         url: '/logout',
-        icon: <PersonPinCircleOutlined />,
+        icon: <ExitToAppIcon />,
       },
     ],
   },
@@ -89,22 +101,22 @@ const Items = {
   unauthenticated: {
     buttons: [
       {
-        title: 'Login As Patient',
+        title: 'Patient Login',
         id: 'login-patient',
         url: '/patient/sign-in',
-        icon: <PersonPinCircleOutlined />,
+        icon: <LoginIcon color='primary' />,
       },
       {
-        title: 'Login As Doctor',
+        title: 'Doctor Login',
         id: 'login-doctor',
         url: '/doctor/sign-in',
-        icon: <PersonPinCircleOutlined />,
+        icon: <LoginIcon color='primary'/>,
       },
       {
-        title: 'Login As Admin',
+        title: 'Admin Login',
         id: 'login-admin',
         url: '/admin/auth/sign-in',
-        icon: <PersonPinCircleOutlined />,
+        icon: <LoginIcon color='primary'/>,
       },
     ],
   },
@@ -119,7 +131,7 @@ export const Sidebar = ({ children }) => {
     console.log({ open });
     setOpen(open);
   };
-  const { token, signOut } = useAuth();
+  const { token, signOut, user } = useAuth();
   console.log({ token });
 
   const logoutHandler = () => {
@@ -128,33 +140,33 @@ export const Sidebar = ({ children }) => {
     window.location.assign('http://localhost:3000');
   };
 
-  const list = () => {
-    console.log('list');
-    <Box sx={{ width: 350 }} role="presentation" onClick={handleDrawer(false)}>
-      <List>
-        {items.map((item) => (
-          <ListItem key={item.id} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText color="red" primary={item.title} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </Box>;
-  };
+  // const list = () => {
+  //   console.log('list');
+  //   <Box sx={{ width: 350 }} role="presentation" onClick={handleDrawer(false)}>
+  //     <List>
+  //       {items.map((item) => (
+  //         <ListItem key={item.id} disablePadding>
+  //           <ListItemButton>
+  //             <ListItemIcon>{item.icon}</ListItemIcon>
+  //             <ListItemText color="red" primary={item.title} />
+  //           </ListItemButton>
+  //         </ListItem>
+  //       ))}
+  //     </List>
+  //   </Box>;
+  // };
 
   const makeColor = (url) => {
     if (router.pathname === url) {
-      return { backgroundColor: 'red' };
+      return { backgroundColor: '#D2CECD' };
     }
     return {};
   };
   return (
     <>
       <Drawer anchor={'left'} open={open} onClose={handleDrawer(false)}>
-        <DrawerHeader>
-          <Typography>Hospital Management System</Typography>
+        <DrawerHeader sx={{color:"green"}}>
+          <Typography>{user.type.toUpperCase()} PANEL</Typography>
 
           <IconButton onClick={handleDrawer(false)}>
             <ChevronLeftIcon />

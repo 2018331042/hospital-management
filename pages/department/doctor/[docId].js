@@ -97,6 +97,7 @@ export default function DoctorProfile() {
                   Sylhet
                 </Typography>
               </ListItem>
+<<<<<<< HEAD
               <ListItem>
                 <CallIcon />
                 <Typography component="h3" variant="h3" sx={{ margin: 2 }}>
@@ -109,9 +110,14 @@ export default function DoctorProfile() {
                   arifshahriar@gmail.com
                 </Typography>
               </ListItem>
+=======
+              {/* <ListItem>
+                <Button>Edit Profile</Button>
+              </ListItem> */}
+>>>>>>> 3da30aa6296ecfae942a616b3b8b6079b11567c9
             </List>
           </Grid>
-          <Grid
+          {/* <Grid
             item
             md={4}
             xs={12}
@@ -198,9 +204,10 @@ export default function DoctorProfile() {
                 </Typography>
               </CardContent>
             </Card>
-          </Grid>
+          </Grid> */}
         </Grid>
       </ThemeProvider>
     </Page>
   );
 }
+

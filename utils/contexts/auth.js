@@ -32,8 +32,9 @@ export const AuthProvider = ({ children }) => {
       // }
       return;
     }
-    setToken(token);
     console.log({ token });
+    
+    setToken(token);
     axios
       .post('/api/verify-token', {
         token,
@@ -55,6 +56,7 @@ export const AuthProvider = ({ children }) => {
           router.push('/');
         }
       });
+      setIsLoading(false);
   }, []);
 
   const signIn = async (userEmail, password, userType) => {
@@ -68,10 +70,10 @@ export const AuthProvider = ({ children }) => {
     if (status === 'ERROR') {
       return { status, message };
     }
-    const { token, email, type } = data;
+    const { token, email, type, id } = data;
     localStorage.setItem('token', token);
     setToken(token);
-    setUser({ email, type });
+    setUser({ email, type, id});
     setIsLoggedIn(true);
     setIsLoading(false);
     return { status, message };
