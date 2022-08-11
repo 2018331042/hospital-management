@@ -77,5 +77,6 @@ To automation the whole process of managing a hospital services and mainting dat
 ## Doctor Account Password
 
 - codeforces.contest2019@gmail.com -- 244456
-- a@gmail.com -- 501840.
+- a@gmail.com -- 501840
 - Fahim@gmail.com -- 371093
+- arif@gmail.com -- 793079

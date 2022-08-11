@@ -57,6 +57,7 @@ export default function DoctorProfile() {
   const [email, setNewEmail] = useState('');
   const { user, isLoading } = useAuth();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(async () => {
     const getDoctorProfileData = async () => {
       const response = await axios.post('/api/doctor/profile_data', {
