@@ -21,11 +21,11 @@ export const GET_DEPT_NAME = `SELECT name FROM DEPARTMENT WHERE code = ?`;
 
 export const GET_DEPT_CODE_AND_NAME = `SELECT code, name FROM DEPARTMENT`;
 
-export const INSERT_BOOKED_DOCTORS = `INSERT INTO BOOKED_DOCTORS (patient_email, doc_id) VALUES (?, ?)`;
+export const INSERT_BOOKED_DOCTORS = `INSERT INTO BOOKED_DOCTORS (patient_email, doc_id, date) VALUES (?, ?, ?)`;
 
 export const UPDATE_DEPT_TOTAL_DOCTOR = `UPDATE DEPARTMENT SET total_doctor = ? WHERE code = ?`;
 
-export const FIND_DOCTOR_BY_ID = `SELECT BD.id, P.email, P.name, P.gender FROM BOOKED_DOCTORS AS BD 
+export const FIND_DOCTOR_BY_ID = `SELECT BD.date, BD.id, P.email, P.name, P.gender FROM BOOKED_DOCTORS AS BD 
 INNER JOIN PATIENT AS P ON
 BD.patient_email = P.email WHERE BD.doc_id = ?`;
 
@@ -61,3 +61,14 @@ export const CREATE_BOOKED_DOCTORS_TABLE = `CREATE TABLE BOOKED_DOCTORS(
     FOREIGN KEY(patient_email) REFERENCES PATIENT(email),
     FOREIGN KEY(doc_id) REFERENCES DOCTOR(id)
 )`;
+
+export const CREATE_DOCTOR_ANALYTICS =  `CREATE TABLE DOCTORS_ANALYTICS (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    total_patient INTEGER NOT NULL,
+    net_income INTEGER,
+    withdrawn INTEGER,
+    current_balance INTEGER,
+    doc_id INTEGER NOT NULL,
+    
+    FOREIGN KEY(doc_id) REFERENCES DOCTOR(id)
+  );`
