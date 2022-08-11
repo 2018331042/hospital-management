@@ -20,6 +20,8 @@ import Page from '../../components/page';
 import { fontWeight } from '@mui/system';
 import AddAPhoto from '@mui/icons-material/AddAPhoto';
 import { Modal, Group, TextInput, Button } from '@mantine/core';
+import axios from 'axios';
+import { useAuth } from '../../utils/contexts/auth';
 
 export default function DoctorProfile() {
   const theme = createTheme({
@@ -49,6 +51,37 @@ export default function DoctorProfile() {
   const [images, setImages] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
   const [opened, setOpened] = useState(false);
+  const [info, setInfo] = useState();
+  const [name, setNewName] = useState("");
+  const [degree, setNewDegree] = useState("");
+  const [email, setNewEmail] = useState("");
+  const { user, isLoading } = useAuth();
+
+  useEffect(async() => {
+    const getDoctorProfileData = async() => {
+      const response = await axios.post("/api/doctor/profile_data", {
+        doc_id: user.id,
+      })
+      const {data:{result}, status} = response.data;
+      console.log({result});
+      if(result.length === 0 ) return null;
+      setNewName(result[0].name);
+      setNewEmail(result[0].email);
+      setNewDegree(result[0].qualification);
+      setInfo(result[0]);
+    }
+    await getDoctorProfileData();
+  }, [user.email])
+
+  const handleChange = async() =>{
+    console.log({name, email, degree});
+    const res = await axios.post("/api/doctor/update_profile", {
+      name,
+      degree,
+      email,
+      doc_id:user.id,
+    })
+  }
 
   function onImageChange(e) {
     setImages([...e.target.files]);
@@ -58,6 +91,7 @@ export default function DoctorProfile() {
   const selectImage = () => {
     console.log('select image');
   };
+
   return (
     <Page>
       <ThemeProvider theme={theme}>
@@ -95,12 +129,12 @@ export default function DoctorProfile() {
             <List>
               <ListItem>
                 <Typography component="h1" variant="h1">
-                  Dr. Tariful Islam Fahim
+                  {info?.name}
                 </Typography>
               </ListItem>
               <ListItem>
                 <Typography component="h2" variant="h2">
-                  MBBS FCPS MD
+                  {info?.qualification}
                 </Typography>
               </ListItem>
               <ListItem>
@@ -110,15 +144,9 @@ export default function DoctorProfile() {
                 </Typography>
               </ListItem>
               <ListItem>
-                <CallIcon />
-                <Typography component="h3" variant="h3" sx={{ margin: 2 }}>
-                  017420420420
-                </Typography>
-              </ListItem>
-              <ListItem>
                 <EmailIcon />
                 <Typography component="h3" variant="h3" sx={{ margin: 2 }}>
-                  arifshahriar@gmail.com
+                  {info?.email}
                 </Typography>
               </ListItem>
               <ListItem>
@@ -129,32 +157,22 @@ export default function DoctorProfile() {
                   centered
                 >
                   <TextInput
-                    placeholder="Your name"
+                    placeholder={info?.name}
                     label="Full name"
-                    required
+                    value={name}
+                    onChange={(e) => setNewName(e.currentTarget.value)}
                   />
                   <br />
                   <TextInput
                     placeholder="Your degree"
                     label="Degree"
-                    required
-                  />
+                    value={degree}
+                    onChange={(e) => setNewDegree(e.currentTarget.value)}
+                  /> 
                   <br />
-                  <TextInput
-                    placeholder="your current post"
-                    label="Current Post"
-                    required
-                  />
+                  <TextInput value={email} placeholder="Your email" label="Email" onChange={(e) => setNewEmail(e.currentTarget.value)} />
                   <br />
-                  <TextInput
-                    placeholder="Your mobile"
-                    label="Mobile"
-                    required
-                  />
-                  <br />
-                  <TextInput placeholder="Your email" label="Email" required />
-                  <br />
-                  <Button>Save changes</Button>
+                  <Button onClick={handleChange}>Save changes</Button>
                   <br />
                 </Modal>
                 <Group position="center">
@@ -163,73 +181,6 @@ export default function DoctorProfile() {
               </ListItem>
             </List>
           </Grid>
-          {/* <Grid
-            item
-            md={4}
-            xs={12}
-            alignItems="center"
-            justify="center"
-            sx={{ marginTop: 10 }}
-          >
-            <Card
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <CardContent>
-                <Typography component="h3" variant="h3">
-                  Monthly salary: 120k
-                </Typography>
-                <Typography component="h3" variant="h3">
-                  Last payment: 12 May, 2022
-                </Typography>
-                <Typography component="h3" variant="h3">
-                  Due Salary: 12 May, 2022
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item md={4} xs={12} sx={{ marginTop: 10 }}>
-            <Card
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <CardContent>
-                <Typography component="h3" variant="h3">
-                  Monthly salary: 120k
-                </Typography>
-                <Typography component="h3" variant="h3">
-                  Last payment: 12 May, 2022
-                </Typography>
-                <Typography component="h3" variant="h3">
-                  Due Salary: 12 May, 2022
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item md={4} xs={12} sx={{ marginTop: 10 }}>
-            <Card
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <CardContent>
-                <Typography component="h3" variant="h3">
-                  Patient per day: 50
-                </Typography>
-                <Typography component="h3" variant="h3">
-                  Todays patient: 45
-                </Typography>
-                <Typography component="h3" variant="h3">
-                  Total Income: 233434
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid> */}
         </Grid>
       </ThemeProvider>
     </Page>

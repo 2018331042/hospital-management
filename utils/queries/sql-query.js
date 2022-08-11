@@ -29,6 +29,10 @@ export const FIND_DOCTOR_BY_ID = `SELECT BD.date, BD.id, P.email, P.name, P.gend
 INNER JOIN PATIENT AS P ON
 BD.patient_email = P.email WHERE BD.doc_id = ?`;
 
+export const GET_DOCTOR_INFO = `SELECT name,qualification,email FROM DOCTOR WHERE id = ?`
+
+export const UPDATE_DOCTOR_PROFILE = `UPDATE DOCTOR SET name = ?, email = ?, qualification = ? WHERE id = ?`
+
 export const INSERT_DOCTOR_ANALYTICS = `INSERT INTO DOCTORS_ANALYTICS (doc_id) VALUES (?)`;
 
 export const GET_DOCTOR_EARNINGS_ANALYTICS = `SELECT * FROM DOCTORS_ANALYTICS WHERE doc_id = ?`
