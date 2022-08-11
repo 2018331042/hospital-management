@@ -25,6 +25,10 @@ export const INSERT_BOOKED_DOCTORS = `INSERT INTO BOOKED_DOCTORS (patient_email,
 
 export const UPDATE_DEPT_TOTAL_DOCTOR = `UPDATE DEPARTMENT SET total_doctor = ? WHERE code = ?`;
 
+export const INSERT_PRESCRIPTION_AND_STATUS = `UPDATE BOOKED_DOCTORS SET prescription = ?, current_status = ? WHERE id = ?`
+
+export const GET_PREVIOUS_PRESCRIPTION = `SELECT prescription FROM BOOKED_DOCTORS WHERE id = ?`;
+
 export const FIND_DOCTOR_BY_ID = `SELECT BD.date, BD.id, P.email, P.name, P.gender FROM BOOKED_DOCTORS AS BD 
 INNER JOIN PATIENT AS P ON
 BD.patient_email = P.email WHERE BD.doc_id = ?`;

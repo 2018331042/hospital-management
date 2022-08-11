@@ -47,7 +47,8 @@ export default function DoctorDashBoard() {
         let currentPatient = [];
         let prevPatient = [];
         patientInfo.map((info) => {
-          if (new Date() === new Date(info.date)) {
+          console.log({check: new Date().toDateString() === new Date(info.date).toDateString()})
+          if (new Date().toDateString() === new Date(info.date).toDateString()) {
             currentPatient.push(info);
             console.log({ currentPatient });
           } else {
@@ -61,9 +62,6 @@ export default function DoctorDashBoard() {
       }
     };
     await getDashBoardData();
-    // console.log({ curPatientInfo });
-    // console.log({ prevPatientInfo });
-    // console.log({analytics})
   }, [user.email]);
   return (
     <Page>
