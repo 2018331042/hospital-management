@@ -3,22 +3,29 @@ import {
   Badge,
   Button,
   Card,
+  Center,
   Collapse,
+  Container,
   Grid,
   Group,
   Image,
+  Modal,
+  Paper,
   Table,
   Text,
+  TextInput,
 } from '@mantine/core';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Page from '../../components/page';
 import { useAuth } from '../../utils/contexts/auth';
+import { useScrollIntoView } from '@mantine/hooks';
 
 export default function DoctorDashBoard() {
   const [curOpened, setCurOpen] = useState(false);
   const [prevOpened, setPrevOpen] = useState(false);
+  const [opened, setOpened] = useState(false);
   const [curPatientInfo, setCurPatientInfo] = useState([
     {
       email: '',
@@ -36,6 +43,8 @@ export default function DoctorDashBoard() {
 
   const { user } = useAuth();
   const router = useRouter();
+
+  const { scrollIntoView, targetRef, scrollableRef } = useScrollIntoView();
 
   useEffect(async () => {
     const getDashBoardData = async () => {
@@ -74,53 +83,25 @@ export default function DoctorDashBoard() {
     };
     await getDashBoardData();
   }, [user.email]);
+
   return (
     <Page>
-      <Button onClick={() => setCurOpen((o) => !o)}>
-        Today&apos;s Patient List
-      </Button>
-      <Collapse
-        in={curOpened}
-        transitionDuration={500}
-        transitionTimingFunction="linear"
+      <Container
+        sx={{
+          marginLeft: 100,
+          alignItems: 'center',
+        }}
       >
-        <Table>
-          <thead>
-            <tr>
-              <th>Email</th>
-              <th>Name</th>
-              <th>Gender</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* {console.log(prevPatientInfo)} */}
-            {curPatientInfo?.map((info) => (
-              <tr key={info.email}>
-                <td>{info.email}</td>
-                <td>{info.name}</td>
-                <td>{info.gender}</td>
-                {/* <td>{info.date}</td> */}
-                <td>
-                  <Button
-                    onClick={() =>
-                      router.push(`/doctor/prescription/${info.id}`)
-                    }
-                  >
-                    check
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </Collapse>
-      <div style={{ marginTop: '5rem' }}>
-        <Button onClick={() => setPrevOpen((o) => !o)}>
-          Previous Patient List
+        <Button
+          variant="gradient"
+          gradient={{ from: 'teal', to: 'lime', deg: 105 }}
+          onClick={() => setCurOpen((o) => !o)}
+        >
+          Today&apos;s Patient List
         </Button>
+
         <Collapse
-          in={prevOpened}
+          in={curOpened}
           transitionDuration={500}
           transitionTimingFunction="linear"
         >
@@ -135,7 +116,7 @@ export default function DoctorDashBoard() {
             </thead>
             <tbody>
               {/* {console.log(prevPatientInfo)} */}
-              {prevPatientInfo?.map((info) => (
+              {curPatientInfo?.map((info) => (
                 <tr key={info.email}>
                   <td>{info.email}</td>
                   <td>{info.name}</td>
@@ -143,12 +124,11 @@ export default function DoctorDashBoard() {
                   {/* <td>{info.date}</td> */}
                   <td>
                     <Button
-                      color="green"
                       onClick={() =>
                         router.push(`/doctor/prescription/${info.id}`)
                       }
                     >
-                      completed
+                      check
                     </Button>
                   </td>
                 </tr>
@@ -156,20 +136,93 @@ export default function DoctorDashBoard() {
             </tbody>
           </Table>
         </Collapse>
-      </div>
-      <div style={{ marginTop: '.5rem' }}>
-        <Card shadow="sm" p="lg" radius="md" withBorder>
-          <Grid style={{ textAlign: 'center' }}>
-            <Grid.Col span={2}>
-              <div>Total earning</div>
-              <div>5</div>
-            </Grid.Col>
-            <Grid.Col span={2}>
-              <div>Total Patient</div>
-            </Grid.Col>
-          </Grid>
-        </Card>
-      </div>
+        <div style={{ marginTop: '5rem' }}>
+          <Button
+            variant="gradient"
+            gradient={{ from: 'orange', to: 'red' }}
+            onClick={() => setPrevOpen((o) => !o)}
+          >
+            Previous Patient List
+          </Button>
+          <Collapse
+            in={prevOpened}
+            transitionDuration={500}
+            transitionTimingFunction="linear"
+          >
+            <Table>
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Name</th>
+                  <th>Gender</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* {console.log(prevPatientInfo)} */}
+                {prevPatientInfo?.map((info) => (
+                  <tr key={info.email}>
+                    <td>{info.email}</td>
+                    <td>{info.name}</td>
+                    <td>{info.gender}</td>
+                    {/* <td>{info.date}</td> */}
+                    <td>
+                      <Button
+                        color="green"
+                        onClick={() =>
+                          router.push(`/doctor/prescription/${info.id}`)
+                        }
+                      >
+                        completed
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </Collapse>
+        </div>
+
+        <div style={{ marginTop: '5rem' }}>
+          <Text align="center" weight={700} size="lg" sx={{ margin: 5 }}>
+            {' '}
+            Analytics{' '}
+          </Text>
+          <Card shadow="sm" p="lg" radius="md" withBorder>
+            <Grid style={{ textAlign: 'center' }}>
+              <Grid.Col span={3}>
+                <div>Total earning</div>
+                <div>5</div>
+              </Grid.Col>
+              <Grid.Col span={3}>
+                <div>Total Patient</div>
+              </Grid.Col>
+              <Grid.Col span={3}>
+                <div>Pending Patient</div>
+              </Grid.Col>
+              <Grid.Col span={3}>
+                <div>Credit</div>
+              </Grid.Col>
+            </Grid>
+          </Card>
+        </div>
+
+        <Modal
+          opened={opened}
+          onClose={() => setOpened(false)}
+          title="Money Withdrawal"
+          centered
+        >
+          <TextInput placeholder="type amount" label="Amount" />
+          <br />
+          <Button>Withdraw</Button>
+          <br />
+        </Modal>
+
+        <Center sx={{ marginTop: 50 }}>
+          <Button onClick={() => setOpened(true)}>Withdraw money</Button>
+        </Center>
+      </Container>
     </Page>
   );
 }
