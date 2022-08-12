@@ -74,7 +74,9 @@ export default function DoctorList({ doctorList, deptName }) {
                     boxShadow: 20,
                     border: '2px solid orange', // theme.shadows[20]
                     transitionDuration: '500ms',
+                    height: 650,
                   },
+                  height: 490,
                 }}
               >
                 <Grid
@@ -147,12 +149,20 @@ export default function DoctorList({ doctorList, deptName }) {
                         </Typography>
                       </ListItem>
                     </List>
-                    <Button
-                      variant="contained"
-                      onClick={(e) => bookHandler(doc)}
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItem: 'center',
+                      }}
                     >
-                      Book Now
-                    </Button>
+                      <Button
+                        variant="contained"
+                        onClick={(e) => bookHandler(doc)}
+                      >
+                        Book Now
+                      </Button>
+                    </div>
                   </CardContent>
                 </Grid>
               </Card>
