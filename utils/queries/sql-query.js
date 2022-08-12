@@ -33,7 +33,7 @@ export const FIND_DOCTOR_BY_ID = `SELECT BD.current_status, BD.date, BD.id, P.em
 INNER JOIN PATIENT AS P ON
 BD.patient_email = P.email WHERE BD.doc_id = ?`;
 
-export const GET_PATEINT_HISTORY = `SELECT BD.current_status, BD.date, BD.id, D.name, D.visit_fee FROM BOOKED_DOCTORS AS BD 
+export const GET_PATEINT_HISTORY = `SELECT BD.current_status, BD.date, BD.id, D.name, D.visit_fee, D.start_time FROM BOOKED_DOCTORS AS BD 
 INNER JOIN DOCTOR AS D ON
 BD.doc_id = D.id WHERE BD.patient_email = ?`
 
