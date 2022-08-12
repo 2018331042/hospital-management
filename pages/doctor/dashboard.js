@@ -96,6 +96,59 @@ export default function DoctorDashBoard() {
 
   return (
     <Page>
+      <Modal
+        opened={openedFirst}
+        onClose={() => setOpenedFirst(false)}
+        title="Money Withdrawal"
+        centered
+      >
+        <TextInput placeholder="type amount" label="Amount" />
+        <br />
+        <Button>Withdraw</Button>
+        <br />
+      </Modal>
+
+      <Modal
+        opened={openedSecond}
+        onClose={() => setOpenedSecond(false)}
+        title="Request to change office hour"
+        centered
+      >
+        <TimeRangeInput
+          label="Office hour"
+          // value={value}
+          // onChange={setValue}
+          clearable
+        />
+        <br />
+        <Button>Request Change</Button>
+        <br />
+      </Modal>
+
+      <Modal
+        opened={openedThird}
+        onClose={() => setOpenedThird(false)}
+        title="Request to change visit fee"
+        centered
+      >
+        <TextInput placeholder="type amount" label="Amount" />
+        <br />
+        <Button>Request Change</Button>
+        <br />
+      </Modal>
+
+      <Modal
+        opened={openedFourth}
+        onClose={() => setOpenedFourth(false)}
+        title="Request to change patient number"
+        centered
+      >
+        <TextInput placeholder="type number" label="Total patient a day" />
+        <br />
+        <Button>Request Change</Button>
+        <br />
+      </Modal>
+
       <Container
         sx={{
           marginLeft: 100,
@@ -246,59 +299,6 @@ export default function DoctorDashBoard() {
           </Card>
         </div>
       </Container>
-
-      <Modal
-        opened={openedFirst}
-        onClose={() => setOpenedFirst(false)}
-        title="Money Withdrawal"
-        centered
-      >
-        <TextInput placeholder="type amount" label="Amount" />
-        <br />
-        <Button>Withdraw</Button>
-        <br />
-      </Modal>
-
-      <Modal
-        opened={openedSecond}
-        onClose={() => setOpenedSecond(false)}
-        title="Request to change office hour"
-        centered
-      >
-        <TimeRangeInput
-          label="Office hour"
-          // value={value}
-          // onChange={setValue}
-          clearable
-        />
-        <br />
-        <Button>Request Change</Button>
-        <br />
-      </Modal>
-
-      <Modal
-        opened={openedThird}
-        onClose={() => setOpenedThird(false)}
-        title="Request to change visit fee"
-        centered
-      >
-        <TextInput placeholder="type amount" label="Amount" />
-        <br />
-        <Button>Request Change</Button>
-        <br />
-      </Modal>
-
-      <Modal
-        opened={openedFourth}
-        onClose={() => setOpenedFourth(false)}
-        title="Request to change patient number"
-        centered
-      >
-        <TextInput placeholder="type number" label="Total patient a day" />
-        <br />
-        <Button>Request Change</Button>
-        <br />
-      </Modal>
     </Page>
   );
 }
