@@ -98,7 +98,7 @@ export default function history() {
         </Button>
       </Modal>
       <Container sx={{ margin: '3rem' }}>
-        <Title margin={10}> UPCOMING EVENTS</Title>
+        <Title> UPCOMING EVENTS</Title>
         <Table>
           <thead>
             <tr>
