@@ -16,6 +16,17 @@ export default function Dashboard() {
     <Page>
       <div
         style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          color: 'gray',
+          marginBottom: 10,
+        }}
+      >
+        <h1>Admin Dashboard</h1>
+      </div>
+      <div
+        style={{
           backgroundColor: 'MediumAquamarine',
           padding: 5,
         }}
