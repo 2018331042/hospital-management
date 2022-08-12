@@ -52,7 +52,7 @@ export default function DoctorList({ doctorList, deptName }) {
           flexDirection: 'column',
           // justifyContent: 'center',
           // alignItems: 'center',
-          color: 'gray',
+          color: 'Teal',
           marginBottom: 10,
           // marginTop: '.05rem',
           // padding: '.05rem',
@@ -94,7 +94,7 @@ export default function DoctorList({ doctorList, deptName }) {
                   >
                     <Avatar
                       alt={doc.DoctorName}
-                      src={doc.DoctorImage}
+                      src="https://thumbs.dreamstime.com/z/doctor-web-icon-therapist-medical-avatar-flat-style-illustration-doctor-web-icon-therapist-avatar-103706622.jpg"
                       sx={{
                         width: 220,
                         height: 220,
@@ -109,7 +109,7 @@ export default function DoctorList({ doctorList, deptName }) {
                         style={{
                           display: 'flex',
                           justifyContent: 'center',
-                          color: 'Orange',
+                          color: 'RoyalBlue',
                         }}
                       >
                         <Typography component="h2" variant="h4">

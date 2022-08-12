@@ -20,7 +20,7 @@ export default function Home({ departments }) {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          color: 'gray',
+          color: 'SteelBlue',
           marginBottom: 10,
         }}
       >

@@ -19,7 +19,7 @@ export default function Dashboard() {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          color: 'gray',
+          color: 'DarkCyan',
           marginBottom: 10,
         }}
       >
