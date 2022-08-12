@@ -50,7 +50,9 @@ export default function Home({ departments }) {
                     ></CardMedia>
                     <CardContent>
                       <Typography>{department.name}</Typography>
-                      <Typography>Doctors: {department.total_doctor}</Typography>
+                      <Typography>
+                        Doctors: {department.total_doctor}
+                      </Typography>
                     </CardContent>
                   </CardActionArea>
                 </NextLink>
@@ -63,15 +65,13 @@ export default function Home({ departments }) {
   );
 }
 
-
-export async function getServerSideProps(ctx){
+export async function getServerSideProps(ctx) {
   const res = await db.query(GET_DEPT_INFO);
   const departments = JSON.parse(JSON.stringify(res));
   console.log({ departments });
   return {
     props: {
       departments,
-    }
-  }
-
+    },
+  };
 }

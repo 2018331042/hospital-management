@@ -15,17 +15,23 @@ import {
   Text,
   TextInput,
 } from '@mantine/core';
+import dayjs from 'dayjs';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Page from '../../components/page';
 import { useAuth } from '../../utils/contexts/auth';
 import { useScrollIntoView } from '@mantine/hooks';
+import { urlObjectKeys } from 'next/dist/shared/lib/utils';
+import { TimeRangeInput } from '@mantine/dates';
 
 export default function DoctorDashBoard() {
   const [curOpened, setCurOpen] = useState(false);
   const [prevOpened, setPrevOpen] = useState(false);
-  const [opened, setOpened] = useState(false);
+  const [openedFirst, setOpenedFirst] = useState(false);
+  const [openedSecond, setOpenedSecond] = useState(false);
+  const [openedThird, setOpenedThird] = useState(false);
+  const [openedFourth, setOpenedFourth] = useState(false);
   const [curPatientInfo, setCurPatientInfo] = useState([
     {
       email: '',
@@ -40,6 +46,10 @@ export default function DoctorDashBoard() {
       gender: null,
     },
   ]);
+
+  const now = new Date();
+  const then = dayjs(now).add(30, 'minutes').toDate();
+  // const [value, setValue] = useState < [Date, Date] > [now, then];
 
   const { user } = useAuth();
   const router = useRouter();
@@ -206,23 +216,89 @@ export default function DoctorDashBoard() {
             </Grid>
           </Card>
         </div>
-
-        <Modal
-          opened={opened}
-          onClose={() => setOpened(false)}
-          title="Money Withdrawal"
-          centered
-        >
-          <TextInput placeholder="type amount" label="Amount" />
-          <br />
-          <Button>Withdraw</Button>
-          <br />
-        </Modal>
-
         <Center sx={{ marginTop: 50 }}>
-          <Button onClick={() => setOpened(true)}>Withdraw money</Button>
+          <Button onClick={() => setOpenedFirst(true)}>Withdraw money</Button>
         </Center>
+
+        <div style={{ marginTop: '5rem' }}>
+          <Text align="center" weight={700} size="lg" sx={{ margin: 5 }}>
+            {' '}
+            Request to Admin{' '}
+          </Text>
+          <Card shadow="sm" p="lg" radius="md" withBorder>
+            <Grid style={{ textAlign: 'center' }}>
+              <Grid.Col span={4}>
+                <Button onClick={() => setOpenedSecond(true)}>
+                  Change Office hour
+                </Button>
+              </Grid.Col>
+              <Grid.Col span={4}>
+                <Button onClick={() => setOpenedThird(true)}>
+                  Update visit fee
+                </Button>
+              </Grid.Col>
+              <Grid.Col span={4}>
+                <Button onClick={() => setOpenedFourth(true)}>
+                  Change patient number
+                </Button>
+              </Grid.Col>
+            </Grid>
+          </Card>
+        </div>
       </Container>
+
+      <Modal
+        opened={openedFirst}
+        onClose={() => setOpenedFirst(false)}
+        title="Money Withdrawal"
+        centered
+      >
+        <TextInput placeholder="type amount" label="Amount" />
+        <br />
+        <Button>Withdraw</Button>
+        <br />
+      </Modal>
+
+      <Modal
+        opened={openedSecond}
+        onClose={() => setOpenedSecond(false)}
+        title="Request to change office hour"
+        centered
+      >
+        <TimeRangeInput
+          label="Office hour"
+          // value={value}
+          // onChange={setValue}
+          clearable
+        />
+        <br />
+        <Button>Request Change</Button>
+        <br />
+      </Modal>
+
+      <Modal
+        opened={openedThird}
+        onClose={() => setOpenedThird(false)}
+        title="Request to change visit fee"
+        centered
+      >
+        <TextInput placeholder="type amount" label="Amount" />
+        <br />
+        <Button>Request Change</Button>
+        <br />
+      </Modal>
+
+      <Modal
+        opened={openedFourth}
+        onClose={() => setOpenedFourth(false)}
+        title="Request to change patient number"
+        centered
+      >
+        <TextInput placeholder="type number" label="Total patient a day" />
+        <br />
+        <Button>Request Change</Button>
+        <br />
+      </Modal>
     </Page>
   );
 }

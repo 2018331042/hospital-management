@@ -54,110 +54,111 @@ export default function DoctorList({ doctorList, deptName }) {
           // alignItems: 'center',
           color: 'gray',
           marginBottom: 10,
-          marginTop: '5rem',
-          padding: '2rem',
+          // marginTop: '.05rem',
+          // padding: '.05rem',
         }}
       >
-        <Typography variant="h4" sx={{ alignSelf: 'center' }}>
+        <Typography
+          variant="h4"
+          sx={{ alignSelf: 'center', marginBottom: '2rem' }}
+        >
           {deptName}
         </Typography>
-        <Box sx={{ margin: 5 }} flexGrow={1}>
-          <Grid container spacing={4}>
-            {doctorList.map((doc) => (
-              <Grid item md={3} xs={12} key={doc.id}>
-                <Card
-                  sx={{
-                    ':hover': {
-                      boxShadow: 20,
-                      border: '2px solid orange', // theme.shadows[20]
-                      transitionDuration: '500ms',
-                    },
-                  }}
+
+        <Grid container spacing={2} alignItems="stretch">
+          {doctorList.map((doc) => (
+            <Grid item md={3} xs={12} key={doc.id}>
+              <Card
+                sx={{
+                  ':hover': {
+                    boxShadow: 20,
+                    border: '2px solid orange', // theme.shadows[20]
+                    transitionDuration: '500ms',
+                  },
+                }}
+              >
+                <Grid
+                  container
+                  direction="column"
+                  spacing={1}
+                  alignItems="stretch"
                 >
-                  <Grid container direction="column" spacing={1}>
-                    <Grid item container md={3} xs={6}>
-                      <Grid item xs>
-                        <Container
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            flexDirection: 'column',
-                          }}
-                        >
-                          <Avatar
-                            alt={doc.DoctorName}
-                            src={doc.DoctorImage}
-                            sx={{
-                              width: 220,
-                              height: 220,
-                              margin: 10,
-                              display: 'flex',
-                            }}
-                          />
-                        </Container>
-                      </Grid>
-                    </Grid>
-                    <Grid item container direction="column" md={8} xs={6}>
-                      <Grid item xs alignItems="center" justifyContent="center">
-                        <CardContent>
-                          <List>
-                            <ListItem
-                              style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                color: 'Orange',
-                              }}
-                            >
-                              <Typography component="h2" variant="h4">
-                                {doc.name}
-                              </Typography>
-                            </ListItem>
-                            <ListItem
-                              style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                              }}
-                            >
-                              <Typography component="h4" variant="h6">
-                                {doc.qualification}
-                              </Typography>
-                            </ListItem>
-                            <ListItem
-                              style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                              }}
-                            >
-                              <Typography component="h4" variant="h6">
-                                seating time: {doc.start_time} - {doc.end_time}
-                              </Typography>
-                            </ListItem>
-                            <ListItem
-                              style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                              }}
-                            >
-                              <Typography component="h4" variant="h6">
-                                patient seat: {doc.patient_seat}
-                              </Typography>
-                            </ListItem>
-                          </List>
-                          <Button
-                            variant="contained"
-                            onClick={(e) => bookHandler(doc)}
-                          >
-                            Book Now
-                          </Button>
-                        </CardContent>
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
+                  <Container
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      flexDirection: 'column',
+                      height: 280,
+                      width: 220,
+                    }}
+                  >
+                    <Avatar
+                      alt={doc.DoctorName}
+                      src={doc.DoctorImage}
+                      sx={{
+                        width: 220,
+                        height: 220,
+                        margin: 10,
+                        display: 'flex',
+                      }}
+                    />
+                  </Container>
+                  <CardContent>
+                    <List>
+                      <ListItem
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          color: 'Orange',
+                        }}
+                      >
+                        <Typography component="h2" variant="h4">
+                          {doc.name}
+                        </Typography>
+                      </ListItem>
+                      <ListItem
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <Typography component="h4" variant="h6">
+                          {doc.qualification}
+                        </Typography>
+                      </ListItem>
+                      <ListItem
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <Typography component="h4" variant="h6">
+                          seating time: {doc.start_time} - {doc.end_time}
+                        </Typography>
+                      </ListItem>
+                      <ListItem
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <Typography component="h4" variant="h6">
+                          patient seat: {doc.patient_seat}
+                        </Typography>
+                      </ListItem>
+                    </List>
+                    <Button
+                      variant="contained"
+                      onClick={(e) => bookHandler(doc)}
+                    >
+                      Book Now
+                    </Button>
+                  </CardContent>
+                </Grid>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
       </div>
     </Page>
   );
