@@ -1,4 +1,4 @@
-import { Button, Table, Title } from "@mantine/core";
+import { Button, Modal, Table, Textarea, TextInput, Title } from "@mantine/core";
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -10,6 +10,7 @@ export default function history() {
   const [completedList, setCompletedList] = useState([]);
   const router = useRouter();
   const { user, } = useAuth();
+  const [opened, setOpened] = useState(false);
 
   useEffect(async() => {
     const getpatientHistory = async() => {
@@ -36,6 +37,8 @@ export default function history() {
 
   const handleCancel = () => {
     //TODO -- MODAL implementation
+    console.log({cencel});
+    setOpened(true);
   }
 
   const pendingRows = pendingList.map((element) => (
@@ -44,7 +47,7 @@ export default function history() {
       <td>{element.start_time}</td>
       <td>{element.visit_fee}</td>
       <td>{new Date(element.date).toLocaleDateString()}</td>
-      <td><Button color="red" onClick={() => handleCancel}>CANCEL</Button></td>
+      <td><Button color="red" onClick={() => setOpened(true)}>CANCEL</Button></td>
     </tr>
   ));
 
@@ -60,6 +63,16 @@ export default function history() {
 
   return (
     <Page>
+      <Modal
+        opened={opened}
+        onClose={() => setOpened(false)}
+        title="WARNING!!!"
+        centered
+      >
+       {/* <Title order={6}>Why do u want to cancel the event?</Title> */}
+       <Textarea label="Why do u want to cancel the event?" required />
+       <Button color="green" onClick={() => handleCancel()}>SUBMIT</Button>
+      </Modal>
       <Title> UPCOMING EVENTS</Title>
       <Table>
         <thead>
