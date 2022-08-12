@@ -110,7 +110,7 @@ export default function DoctorProfile() {
               <Avatar
                 alt="Arif"
                 src={
-                  'https://img.freepik.com/free-vector/businessman-character-avatar-isolated_24877-60111.jpg?w=2000'
+                  'https://media.istockphoto.com/vectors/medical-doctor-profile-icon-male-doctor-avatar-vector-illustration-vector-id1190555677?k=20&m=1190555677&s=170667a&w=0&h=rTUP_2QYTdkpv--OH8esQ4JhBDrZ1nrMw2KhUn7zK3Y='
                 }
                 layout="responsive"
                 sx={{
